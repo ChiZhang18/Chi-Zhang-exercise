@@ -1,0 +1,311 @@
+---
+title: "Exercise 1 by Chi Zhang"
+output: pdf_document
+---
+#Qustion1: data visualization
+
+library(ggplot2)
+library(ggExtra)
+library(gapminder)
+
+ABIA = read.csv('../data/ABIA.csv')
+
+#Plot 1: Marginal Histogram and Scatterplot to figure out the relation between Departure Delay and Scheduled Departure Time
+theme_set(theme_bw()) 
+g <- ggplot(ABIA, aes(CRSDepTime, DepDelay)) + 
+  geom_point(aes(color = UniqueCarrier)) +
+  labs(title="Departure Delay vs Scheduled Departure Time across Carriers", 
+       caption="Sourced from ABIA dataset",
+       y="Departure Delay in Minute",
+       x="Scheduled Departure Time/hhmm",
+       color="Unique Carrier Code")
+ggMarginal(g, type = "histogram", fill="transparent")
+
+#Plot 2: Facet count chart to figure out conditions on airport delay across carriers
+g <- ggplot(ABIA, aes(CRSDepTime, DepDelay))
+g + geom_count(col="tomato3", show.legend=F) +
+    facet_wrap(~UniqueCarrier, scales = "free") +
+    labs(title = "Departure Delay vs Scheduled Departure Time across Carriers",
+         caption="Sourced from ABIA dataset",
+         y="Departure Delay in Minute",
+         x="Scheduled Departure Time/hhmm")
+
+# Question2: K nearest
+library(tidyverse)
+library(FNN)
+library(MASS)
+library(mosaic)
+sclass = read.csv('../data/sclass.csv')
+
+# Focus on 2 trim levels: 350 and 65 AMG
+sclass550 = subset(sclass, trim == '350')
+sclass65AMG = subset(sclass, trim == '65 AMG')
+
+#######################################
+#First we consider the trim level: 350#
+#######################################
+
+# Make a train-test split
+N = nrow(sclass550)
+N_train = floor(0.8*N)
+N_test = N - N_train
+
+# randomly sample a set of data points to include in the training set
+train_ind = sample.int(N, N_train, replace=FALSE)
+
+# Define the training and testing set
+D_train = sclass550[train_ind,]
+D_test = sclass550[-train_ind,]
+
+# reorder the rows of the testing set by the KHOU (temperature) variable
+D_test = arrange(D_test, mileage)
+
+
+# Now separate the training and testing sets into features (X) and outcome (y)
+X_train = select(D_train, mileage)
+y_train = select(D_train, price)
+X_test = select(D_test, mileage)
+y_test = select(D_test, price)
+
+# Choose differents value of K, starting from k=3 since it might be out of bounds when choosing k=2 
+knn3 = knn.reg(train = X_train, test = X_test, y = y_train, k=3) 
+knn5 = knn.reg(train = X_train, test = X_test, y = y_train, k=5)
+knn10 = knn.reg(train = X_train, test = X_test, y = y_train, k=10)
+knn15 = knn.reg(train = X_train, test = X_test, y = y_train, k=15)
+knn25 = knn.reg(train = X_train, test = X_test, y = y_train, k=25)
+knn50 = knn.reg(train = X_train, test = X_test, y = y_train, k=50)
+knn75 = knn.reg(train = X_train, test = X_test, y = y_train, k=75)
+knn100 = knn.reg(train = X_train, test = X_test, y = y_train, k=100)
+knn150 = knn.reg(train = X_train, test = X_test, y = y_train, k=150)
+knn200 = knn.reg(train = X_train, test = X_test, y = y_train, k=200)
+knn250 = knn.reg(train = X_train, test = X_test, y = y_train, k=250)
+knn300 = knn.reg(train = X_train, test = X_test, y = y_train, k=300)
+knn332 = knn.reg(train = X_train, test = X_test, y = y_train, k=332)
+
+# define a helper function for calculating RMSE
+rmse = function(y, ypred) {
+  sqrt(mean(data.matrix((y-ypred)^2)))
+}
+
+#define a series of predictions from k-nearest regressions
+ypred_knn3 = knn3$pred
+ypred_knn5 = knn5$pred
+ypred_knn10 = knn10$pred
+ypred_knn15 = knn15$pred
+ypred_knn25 = knn25$pred
+ypred_knn50 = knn50$pred
+ypred_knn75 = knn75$pred
+ypred_knn100 = knn100$pred
+ypred_knn150 = knn150$pred
+ypred_knn200 = knn200$pred
+ypred_knn250 = knn250$pred
+ypred_knn300 = knn300$pred
+ypred_knn332 = knn332$pred
+
+#calculate the out-of-sample RMSE in different values of k
+rmse(y_test, ypred_knn3)
+rmse(y_test, ypred_knn5)
+rmse(y_test, ypred_knn10)
+rmse(y_test, ypred_knn15)
+rmse(y_test, ypred_knn25)
+rmse(y_test, ypred_knn50)
+rmse(y_test, ypred_knn75)
+rmse(y_test, ypred_knn100)
+rmse(y_test, ypred_knn150)
+rmse(y_test, ypred_knn200)
+rmse(y_test, ypred_knn250)
+rmse(y_test, ypred_knn300)
+rmse(y_test, ypred_knn332)
+
+# attach the predictions to the test data frame
+D_test$ypred_knn3 = ypred_knn3
+D_test$ypred_knn5 = ypred_knn5
+D_test$ypred_knn10 = ypred_knn10
+D_test$ypred_knn15 = ypred_knn15
+D_test$ypred_knn25 = ypred_knn25
+D_test$ypred_knn50 = ypred_knn50
+D_test$ypred_knn75 = ypred_knn75
+D_test$ypred_knn100 = ypred_knn100
+D_test$ypred_knn150 = ypred_knn150
+D_test$ypred_knn200 = ypred_knn200
+D_test$ypred_knn250 = ypred_knn250
+D_test$ypred_knn300 = ypred_knn300
+D_test$ypred_knn332 = ypred_knn332
+
+#plot the fit
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "K = 3")
+p_test + geom_path(aes(x = mileage, y = ypred_knn5), color='red') + labs(title = "K = 5")
+p_test + geom_path(aes(x = mileage, y = ypred_knn10), color='red') + labs(title = "K = 10")
+p_test + geom_path(aes(x = mileage, y = ypred_knn15), color='red') + labs(title = "K = 15")
+p_test + geom_path(aes(x = mileage, y = ypred_knn25), color='red') + labs(title = "K = 25")
+p_test + geom_path(aes(x = mileage, y = ypred_knn50), color='red') + labs(title = "K = 50")
+p_test + geom_path(aes(x = mileage, y = ypred_knn75), color='red') + labs(title = "K = 75")
+p_test + geom_path(aes(x = mileage, y = ypred_knn100), color='red') + labs(title = "K = 100")
+p_test + geom_path(aes(x = mileage, y = ypred_knn150), color='red') + labs(title = "K = 150")
+p_test + geom_path(aes(x = mileage, y = ypred_knn200), color='red') + labs(title = "K = 200")
+p_test + geom_path(aes(x = mileage, y = ypred_knn250), color='red') + labs(title = "K = 250")
+p_test + geom_path(aes(x = mileage, y = ypred_knn300), color='red') + labs(title = "K = 300")
+p_test + geom_path(aes(x = mileage, y = ypred_knn332), color='red') + labs(title = "K = 332")
+
+
+#make a plot of RMSE versus K
+rmse = function(actual, predicted) {
+  sqrt(mean((actual - predicted) ^ 2))
+}
+make_knn_pred = function(k = 1, training, predicting) {
+  pred = FNN::knn.reg(train = training["mileage"], 
+                      test = predicting["mileage"], 
+                      y = training$price, k = k)$pred
+  act  = predicting$price
+  rmse(predicted = pred, actual = act)
+}
+
+k = c(3:332)
+knn_test_rmse = sapply(k, make_knn_pred,
+                       training = D_train, 
+                       predicting = D_test)
+ggplot() + geom_path(aes(x = k, y =knn_test_rmse, color='red'))
+
+# determine "best" k
+best_k = k[which.min(knn_test_rmse)]
+best_k
+
+# the optimal value of k is 11, so I do the fitted plot on k = 11
+knn_best = knn.reg(train = X_train, test = X_test, y = y_train, k=best_k)
+ypred_knn_best = knn_best$pred
+D_test$ypred_knn_best = ypred_knn_best
+p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(title = "the Best K for Trim 350")
+
+########################################
+#Then we consider the trim level: 65AMG#
+########################################
+# Make a train-test split
+N = nrow(sclass65AMG)
+N_train = floor(0.8*N)
+N_test = N - N_train
+
+# randomly sample a set of data points to include in the training set
+train_ind = sample.int(N, N_train, replace=FALSE)
+
+# Define the training and testing set
+D_train = sclass65AMG[train_ind,]
+D_test = sclass65AMG[-train_ind,]
+
+# reorder the rows of the testing set by the mileage variable
+D_test = arrange(D_test, mileage)
+
+
+# Now separate the training and testing sets into features (X) and outcome (y)
+X_train = select(D_train, mileage)
+y_train = select(D_train, price)
+X_test = select(D_test, mileage)
+y_test = select(D_test, price)
+
+# Choose differents value of K, starting from k=3 since it might be out of bounds when choosing k=2 
+knn3 = knn.reg(train = X_train, test = X_test, y = y_train, k=3)
+knn5 = knn.reg(train = X_train, test = X_test, y = y_train, k=5)
+knn10 = knn.reg(train = X_train, test = X_test, y = y_train, k=10)
+knn15 = knn.reg(train = X_train, test = X_test, y = y_train, k=15)
+knn25 = knn.reg(train = X_train, test = X_test, y = y_train, k=25)
+knn50 = knn.reg(train = X_train, test = X_test, y = y_train, k=50)
+knn75 = knn.reg(train = X_train, test = X_test, y = y_train, k=75)
+knn100 = knn.reg(train = X_train, test = X_test, y = y_train, k=100)
+knn150 = knn.reg(train = X_train, test = X_test, y = y_train, k=150)
+knn200 = knn.reg(train = X_train, test = X_test, y = y_train, k=200)
+knn233 = knn.reg(train = X_train, test = X_test, y = y_train, k=233)
+
+
+# define a helper function for calculating RMSE
+rmse = function(y, ypred) {
+  sqrt(mean(data.matrix((y-ypred)^2)))
+}
+
+#define a series of predictions from k-nearest regressions
+ypred_knn3 = knn3$pred
+ypred_knn5 = knn5$pred
+ypred_knn10 = knn10$pred
+ypred_knn15 = knn15$pred
+ypred_knn25 = knn25$pred
+ypred_knn50 = knn50$pred
+ypred_knn75 = knn75$pred
+ypred_knn100 = knn100$pred
+ypred_knn150 = knn150$pred
+ypred_knn200 = knn200$pred
+ypred_knn233 = knn233$pred
+
+#calculate the out-of-sample RMSE in different values of k
+rmse(y_test, ypred_knn3)
+rmse(y_test, ypred_knn5)
+rmse(y_test, ypred_knn10)
+rmse(y_test, ypred_knn15)
+rmse(y_test, ypred_knn25)
+rmse(y_test, ypred_knn50)
+rmse(y_test, ypred_knn75)
+rmse(y_test, ypred_knn100)
+rmse(y_test, ypred_knn150)
+rmse(y_test, ypred_knn200)
+rmse(y_test, ypred_knn233)
+
+# attach the predictions to the test data frame
+D_test$ypred_knn3 = ypred_knn3
+D_test$ypred_knn5 = ypred_knn5
+D_test$ypred_knn10 = ypred_knn10
+D_test$ypred_knn15 = ypred_knn15
+D_test$ypred_knn25 = ypred_knn25
+D_test$ypred_knn50 = ypred_knn50
+D_test$ypred_knn75 = ypred_knn75
+D_test$ypred_knn100 = ypred_knn100
+D_test$ypred_knn150 = ypred_knn150
+D_test$ypred_knn200 = ypred_knn200
+D_test$ypred_knn233 = ypred_knn233
+
+#plot the fit
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 3")
+p_test + geom_path(aes(x = mileage, y = ypred_knn5), color='red') + labs(title = "k = 5")
+p_test + geom_path(aes(x = mileage, y = ypred_knn10), color='red') + labs(title = "k = 10")
+p_test + geom_path(aes(x = mileage, y = ypred_knn15), color='red') + labs(title = "k = 15")
+p_test + geom_path(aes(x = mileage, y = ypred_knn25), color='red') + labs(title = "k = 25")
+p_test + geom_path(aes(x = mileage, y = ypred_knn50), color='red') + labs(title = "k = 50")
+p_test + geom_path(aes(x = mileage, y = ypred_knn75), color='red') + labs(title = "k = 75")
+p_test + geom_path(aes(x = mileage, y = ypred_knn100), color='red') + labs(title = "k = 100")
+p_test + geom_path(aes(x = mileage, y = ypred_knn150), color='red') + labs(title = "k = 150")
+p_test + geom_path(aes(x = mileage, y = ypred_knn200), color='red') + labs(title = "k = 200")
+p_test + geom_path(aes(x = mileage, y = ypred_knn233), color='red') + labs(title = "k = 233")
+
+#make a plot of RMSE versus K
+rmse = function(actual, predicted) {
+  sqrt(mean((actual - predicted) ^ 2))
+}
+make_knn_pred = function(k = 1, training, predicting) {
+  pred = FNN::knn.reg(train = training["mileage"], 
+                      test = predicting["mileage"], 
+                      y = training$price, k = k)$pred
+  act  = predicting$price
+  rmse(predicted = pred, actual = act)
+}
+k = c(3:233)
+knn_test_rmse = sapply(k, make_knn_pred,
+                       training = D_train, 
+                       predicting = D_test)
+ggplot() + geom_path(aes(x = k, y =knn_test_rmse, color='red'))
+
+# determine "best" k
+best_k = k[which.min(knn_test_rmse)]
+best_k
+
+# the optimal value of k is 11, so I do the fitted plot on k = 11
+knn_best = knn.reg(train = X_train, test = X_test, y = y_train, k=best_k)
+ypred_knn_best = knn_best$pred
+D_test$ypred_knn_best = ypred_knn_best
+p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(title = "the Best K for Trim 65AMG")
+
+#Q:Which trim yields a larger optimal value of K? Why do you think this is?
+#A: It depends since you randomly split the population into train group and test group, so every time running the R code you will get different value of optimal K.
