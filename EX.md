@@ -40,7 +40,7 @@ g + geom_count(col="tomato3", show.legend=F) +
          x="Scheduled Departure Time/hhmm")
 ```
 
-![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-2.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-2.jpg)
 
 Question2: K nearest
 --------------------
