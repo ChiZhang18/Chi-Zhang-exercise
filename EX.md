@@ -23,12 +23,10 @@ g <- ggplot(ABIA, aes(CRSDepTime, DepDelay)) +
 ggMarginal(g, type = "histogram", fill="transparent")
 ```
 
-    ## Warning: Removed 1413 rows containing missing values (geom_point).
 
-    ## Warning: Removed 1413 rows containing missing values (geom_point).
+![](EX_files/figure-markdown_github/unnamed-chunk-2-1.png) 
 
-![](EX_files/figure-markdown_github/unnamed-chunk-2-1.png) Plot 2: Facet
-count chart to figure out conditions on airport delay across carriers
+Plot 2: Facet count chart to figure out conditions on airport delay across carriers
 
 ``` r
 g <- ggplot(ABIA, aes(CRSDepTime, DepDelay))
@@ -40,8 +38,6 @@ g + geom_count(col="tomato3", show.legend=F) +
          x="Scheduled Departure Time/hhmm")
 ```
 
-    ## Warning: Removed 1413 rows containing non-finite values (stat_sum).
-
 ![](EX_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 Question2: K nearest
@@ -52,90 +48,12 @@ sclass <- read.csv("C:/Users/Mayson Zhang/Desktop/UT Austin MA Economics/2020 Sp
 library(tidyverse)
 ```
 
-    ## -- Attaching packages ------------------------------- tidyverse 1.3.0 --
-
-    ## v tibble  2.1.3     v dplyr   0.8.4
-    ## v tidyr   1.0.2     v stringr 1.4.0
-    ## v readr   1.3.1     v forcats 0.4.0
-    ## v purrr   0.3.3
-
-    ## -- Conflicts ---------------------------------- tidyverse_conflicts() --
-    ## x dplyr::filter() masks stats::filter()
-    ## x dplyr::lag()    masks stats::lag()
-
 ``` r
 library(FNN)
 
 library(dplyr)
 library(mosaic)
 ```
-
-    ## Loading required package: lattice
-
-    ## Loading required package: ggformula
-
-    ## Loading required package: ggstance
-
-    ## 
-    ## Attaching package: 'ggstance'
-
-    ## The following objects are masked from 'package:ggplot2':
-    ## 
-    ##     geom_errorbarh, GeomErrorbarh
-
-    ## 
-    ## New to ggformula?  Try the tutorials: 
-    ##  learnr::run_tutorial("introduction", package = "ggformula")
-    ##  learnr::run_tutorial("refining", package = "ggformula")
-
-    ## Loading required package: mosaicData
-
-    ## Loading required package: Matrix
-
-    ## 
-    ## Attaching package: 'Matrix'
-
-    ## The following objects are masked from 'package:tidyr':
-    ## 
-    ##     expand, pack, unpack
-
-    ## Registered S3 method overwritten by 'mosaic':
-    ##   method                           from   
-    ##   fortify.SpatialPolygonsDataFrame ggplot2
-
-    ## 
-    ## The 'mosaic' package masks several functions from core packages in order to add 
-    ## additional features.  The original behavior of these functions should not be affected by this.
-    ## 
-    ## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
-
-    ## 
-    ## Attaching package: 'mosaic'
-
-    ## The following object is masked from 'package:Matrix':
-    ## 
-    ##     mean
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     count, do, tally
-
-    ## The following object is masked from 'package:purrr':
-    ## 
-    ##     cross
-
-    ## The following object is masked from 'package:ggplot2':
-    ## 
-    ##     stat
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
-    ##     prop.test, quantile, sd, t.test, var
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     max, mean, min, prod, range, sample, sum
 
 Focus on 2 trim levels: 350 and 65 AMG
 
