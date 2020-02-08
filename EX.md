@@ -1,6 +1,8 @@
-Qustion1: data visualization
-----------------------------
+Exercise One
+============================
 
+Question1: Data Visualization
+------------------------
 ``` r
 library(ggplot2)
 library(ggExtra)
@@ -24,7 +26,7 @@ ggMarginal(g, type = "histogram", fill="transparent")
 ```
 
 
-![](EX_files/figure-markdown_github/unnamed-chunk-2-1.png) 
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-1.png) 
 
 Plot 2: Facet count chart to figure out conditions on airport delay across carriers
 
@@ -38,7 +40,7 @@ g + geom_count(col="tomato3", show.legend=F) +
          x="Scheduled Departure Time/hhmm")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-2.png)
 
 Question2: K nearest
 --------------------
@@ -243,7 +245,6 @@ D_test$ypred_knn332 = ypred_knn332
 ```
 
 Plot the fit
-
 ``` r
 p_test = ggplot(data = D_test) + 
   geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
@@ -252,79 +253,80 @@ p_test = ggplot(data = D_test) +
 p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "K = 3")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-1.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn5), color='red') + labs(title = "K = 5")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-2.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-2.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn10), color='red') + labs(title = "K = 10")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-3.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-3.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn15), color='red') + labs(title = "K = 15")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-4.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-4.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn25), color='red') + labs(title = "K = 25")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-5.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-5.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn50), color='red') + labs(title = "K = 50")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-6.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-6.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn75), color='red') + labs(title = "K = 75")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-7.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-7.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn100), color='red') + labs(title = "K = 100")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-8.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-8.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn150), color='red') + labs(title = "K = 150")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-9.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-9.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn200), color='red') + labs(title = "K = 200")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-10.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-10.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn250), color='red') + labs(title = "K = 250")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-11.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-11.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn300), color='red') + labs(title = "K = 300")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-12.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-12.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn332), color='red') + labs(title = "K = 332")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-16-13.png) Make a plot
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-13.png) 
+Make a plot
 of RMSE versus K
 
 ``` r
@@ -346,8 +348,8 @@ knn_test_rmse = sapply(k, make_knn_pred,
 ggplot() + geom_path(aes(x = k, y =knn_test_rmse, color='red'))
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-17-1.png) Determine
-“best” K
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-14.png) 
+Determine “best” K
 
 ``` r
 best_k = k[which.min(knn_test_rmse)]
@@ -365,4 +367,4 @@ D_test$ypred_knn_best = ypred_knn_best
 p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(title = "the Best K for Trim 350")
 ```
 
-![](EX_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-15.png)
