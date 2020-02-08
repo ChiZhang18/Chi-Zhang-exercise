@@ -14,4 +14,4 @@ g <- ggplot(ABIA, aes(CRSDepTime, DepDelay)) +
        color="Unique Carrier Code")
 ggMarginal(g, type = "histogram", fill="transparent")
 ```
-![](EX_files/figure-markdown_github/unnamed-chunk-2-1.png) 
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-1.png) 
