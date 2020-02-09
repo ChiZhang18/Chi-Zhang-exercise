@@ -4,11 +4,11 @@ Exercise One
 Question1: Data Visualization
 ------------------------
 
-##Overview of the Problem
+# Overview of the Problem
 
 In this question, we are given the data in ABIA.csv, which contains information on every commercial flight in 2008 that either departed from or landed at Austin-Bergstrom Interational Airport. I am really interested in two  questions: 1) Waht is the best time of day to fay to minimize delay; 2)Which flight is worst considering flight delay? Now I intend to use plots to figure them out.
 
-#Process and Results of Data Analysis
+# Process and Results of Data Analysis
 First load the `ggplot2`, `ggExtra` and `gapminder` libraries
 ``` r
 library(ggplot2)
@@ -16,7 +16,7 @@ library(ggExtra)
 library(gapminder)
 ```
 
-*Plot 1: Marginal Histogram and Scatterplot to figure out the relation between Departure Delay and Scheduled Departure Time
+* Plot 1: Marginal Histogram and Scatterplot to figure out the relation between Departure Delay and Scheduled Departure Time
 ``` r
 ABIA <- read.csv("C:/Users/Mayson Zhang/Desktop/UT Austin MA Economics/2020 Spring/Data Mining/ABIA.csv")
 theme_set(theme_bw()) 
@@ -32,7 +32,7 @@ ggMarginal(g, type = "histogram", fill="transparent")
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-1.png) 
 Viewed from the plot, I find flight delays mainly occur during the period from 10 am to 8 pm, and relatively long delays also occur during this time period. For comparison,it is not hard to find that the flights are expected to depart from midnight to 5 a.m with almost no delay and thus this period of time could be considered as the best time to minimize flight delay. 
 
-*Plot 2: Facet count chart used to figure out conditions on flight delay across carriers
+* Plot 2: Facet count chart used to figure out conditions on flight delay across carriers
 ``` r
 g <- ggplot(ABIA, aes(CRSDepTime, DepDelay))
 g + geom_count(col="tomato3", show.legend=F) +
@@ -45,7 +45,7 @@ g + geom_count(col="tomato3", show.legend=F) +
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q1-2.jpg)
 During a day, AA and WN had relatively high numbers of delayed flights, while NW had the least number of delayed flights. This is most likely due to the different numbers of different airline flights per day, and thus we need to make further statistics and explanation on the delay rate of various carriers through histograms.
 
-*Plot3: Histogram of Departure Delay
+* Plot3: Histogram of Departure Delay
 ```r
 theme_set(theme_classic()) 
 g <- ggplot(ABIA, aes(DepDelay)) + scale_fill_brewer(palette = "Spectral")
