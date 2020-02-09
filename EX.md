@@ -63,56 +63,49 @@ Viewed from the histogram, I find that 9E, YV have relatively low delay rates, w
 
 Question2: K nearest
 --------------------
+#### Overview of the Problem
+When dealing with this dataset, I need to use K-nearest neighbors to build a predictive model for price, given mileage, separately for each of two trim levels: 350 and 65 AMG.For each of these two trim levels: 1)Split the data into a training and a testing set; 2)Run K-nearest-neighbors, for many different values of K, starting at K=2 and going as high as you need to; 3)For each value of K, fit the model to the training set and make predictions on your test set. After it, make a plot of RMSE versus K for each trim to find out the optimal value of K and show the fitted plot under the "best" K.
 
+#### Process and Results of the Data Analysis
+Load the `tidyverse`, `FNN`, `dplyr`, `mosaic` libraries.
 ``` r
-sclass <- read.csv("C:/Users/Mayson Zhang/Desktop/UT Austin MA Economics/2020 Spring/Data Mining/sclass.csv")
 library(tidyverse)
-```
-
-``` r
 library(FNN)
-
 library(dplyr)
 library(mosaic)
 ```
 
 Focus on 2 trim levels: 350 and 65 AMG
-
 ``` r
 sclass550 = subset(sclass, trim == '350')
 sclass65AMG = subset(sclass, trim == '65 AMG')
 ```
 
-First we consider the trim level: 350 Make a train-test split
-
+First we consider the trim level: 350 Make a train-test split.
 ``` r
 N = nrow(sclass550)
 N_train = floor(0.8*N)
 N_test = N - N_train
 ```
 
-randomly sample a set of data points to include in the training set
-
+Randomly sample a set of data points to include in the training set.
 ``` r
 train_ind = sample.int(N, N_train, replace=FALSE)
 ```
 
-Define the training and testing set
-
+Define the training and testing set.
 ``` r
 D_train = sclass550[train_ind,]
 D_test = sclass550[-train_ind,]
 ```
 
-Reorder the rows of the testing set by the KHOU (temperature) variable
-
+Reorder the rows of the testing set by the `mileage` variable.
 ``` r
 D_test = arrange(D_test, mileage)
 ```
 
 Now separate the training and testing sets into features (X) and outcome
-(y)
-
+(y).
 ``` r
 X_train = select(D_train, mileage)
 y_train = select(D_train, price)
@@ -122,7 +115,6 @@ y_test = select(D_test, price)
 
 Choose differents value of K, starting from k=3 since it might be out of
 bounds when choosing k=2
-
 ``` r
 knn3 = knn.reg(train = X_train, test = X_test, y = y_train, k=3) 
 knn5 = knn.reg(train = X_train, test = X_test, y = y_train, k=5)
@@ -140,7 +132,6 @@ knn332 = knn.reg(train = X_train, test = X_test, y = y_train, k=332)
 ```
 
 Define a helper function for calculating RMSE
-
 ``` r
 rmse = function(y, ypred) {
   sqrt(mean(data.matrix((y-ypred)^2)))
@@ -148,7 +139,6 @@ rmse = function(y, ypred) {
 ```
 
 Define a series of predictions from k-nearest regressions
-
 ``` r
 ypred_knn3 = knn3$pred
 ypred_knn5 = knn5$pred
@@ -166,87 +156,60 @@ ypred_knn332 = knn332$pred
 ```
 
 Calculate the out-of-sample RMSE in different values of k
-
 ``` r
 rmse(y_test, ypred_knn3)
 ```
-
     ## [1] 12262.13
-
 ``` r
 rmse(y_test, ypred_knn5)
 ```
-
     ## [1] 11129.54
-
 ``` r
 rmse(y_test, ypred_knn10)
 ```
-
     ## [1] 10481.52
-
 ``` r
 rmse(y_test, ypred_knn15)
 ```
-
     ## [1] 10052.99
-
 ``` r
 rmse(y_test, ypred_knn25)
 ```
-
     ## [1] 10174.39
-
 ``` r
 rmse(y_test, ypred_knn50)
 ```
-
     ## [1] 9782.227
-
 ``` r
 rmse(y_test, ypred_knn75)
 ```
-
     ## [1] 9725.361
-
 ``` r
 rmse(y_test, ypred_knn100)
 ```
-
     ## [1] 9974.101
-
 ``` r
 rmse(y_test, ypred_knn150)
 ```
-
     ## [1] 11228.28
-
 ``` r
 rmse(y_test, ypred_knn200)
 ```
-
     ## [1] 12835.77
-
 ``` r
 rmse(y_test, ypred_knn250)
 ```
-
-    ## [1] 14720.83
-
+    ## [1] 14720.8
 ``` r
 rmse(y_test, ypred_knn300)
 ```
-
     ## [1] 17874.71
-
 ``` r
 rmse(y_test, ypred_knn332)
 ```
-
     ## [1] 20183.49
 
-Attach the predictions to the test data frame
-
+Attach the predictions to the test data frame.
 ``` r
 D_test$ypred_knn3 = ypred_knn3
 D_test$ypred_knn5 = ypred_knn5
@@ -271,83 +234,69 @@ p_test = ggplot(data = D_test) +
 
 p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "K = 3")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-1.png)
 
-``` r
+```r
 p_test + geom_path(aes(x = mileage, y = ypred_knn5), color='red') + labs(title = "K = 5")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-2.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn10), color='red') + labs(title = "K = 10")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-3.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn15), color='red') + labs(title = "K = 15")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-4.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn25), color='red') + labs(title = "K = 25")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-5.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn50), color='red') + labs(title = "K = 50")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-6.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn75), color='red') + labs(title = "K = 75")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-7.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn100), color='red') + labs(title = "K = 100")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-8.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn150), color='red') + labs(title = "K = 150")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-9.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn200), color='red') + labs(title = "K = 200")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-10.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn250), color='red') + labs(title = "K = 250")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-11.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn300), color='red') + labs(title = "K = 300")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-12.png)
 
 ``` r
 p_test + geom_path(aes(x = mileage, y = ypred_knn332), color='red') + labs(title = "K = 332")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-13.png) 
-Make a plot
-of RMSE versus K
 
+Make a plot of RMSE versus K.
 ``` r
 rmse = function(actual, predicted) {
   sqrt(mean((actual - predicted) ^ 2))
@@ -366,24 +315,21 @@ knn_test_rmse = sapply(k, make_knn_pred,
                        predicting = D_test)
 ggplot() + geom_path(aes(x = k, y =knn_test_rmse, color='red'))
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-14.png) 
-Determine “best” K
 
+Determine “best” K
 ``` r
 best_k = k[which.min(knn_test_rmse)]
 best_k
 ```
-
     ## [1] 73
 
-The optimal value of k is 11, so I do the fitted plot on k = 11
-
+The optimal value of k is 73, then do the fitted plot in best value of k
 ``` r
 knn_best = knn.reg(train = X_train, test = X_test, y = y_train, k=best_k)
 ypred_knn_best = knn_best$pred
 D_test$ypred_knn_best = ypred_knn_best
 p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(title = "the Best K for Trim 350")
 ```
-
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-15.png)
+
