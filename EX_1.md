@@ -81,7 +81,8 @@ sclass550 = subset(sclass, trim == '350')
 sclass65AMG = subset(sclass, trim == '65 AMG')
 ```
 
-First we consider the trim level: 350 Make a train-test split.
+First we consider the trim level: 350. 
+Make a train-test split.
 ``` r
 N = nrow(sclass550)
 N_train = floor(0.8*N)
@@ -334,7 +335,7 @@ p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(tit
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-15.png)
 
 Then we consider the trim level: 65AMG.
-All the following process are quite similar than what has be shown above, so I intend to partially skip repetitive R codes and focus on display relevant plots.
+All the following process are quite similar than what has been shown above, so I intend to partially skip repetitive R codes and focus on display relevant plots.
 Considering this trim level: 65AMG, I choose a series of K values and plot the fit respectively.
 ```r
 p_test = ggplot(data = D_test) + 
