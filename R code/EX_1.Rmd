@@ -337,7 +337,7 @@ ggplot() + geom_path(aes(x = k, y =knn_test_rmse, color='red'))
 best_k = k[which.min(knn_test_rmse)]
 best_k
 
-# the optimal value of k is 11, so I do the fitted plot on k = 11
+# After figuring out the optimal value of K, then plot the fit
 knn_best = knn.reg(train = X_train, test = X_test, y = y_train, k=best_k)
 ypred_knn_best = knn_best$pred
 D_test$ypred_knn_best = ypred_knn_best
