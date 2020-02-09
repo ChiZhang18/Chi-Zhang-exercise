@@ -324,7 +324,7 @@ best_k
 ```
     ## [1] 73
 
-The optimal value of k is 73, then do the fitted plot in best value of k
+The optimal value of k is 73, then do the fitted plot in best value of k.
 ``` r
 knn_best = knn.reg(train = X_train, test = X_test, y = y_train, k=best_k)
 ypred_knn_best = knn_best$pred
@@ -333,3 +333,124 @@ p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(tit
 ```
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-15.png)
 
+Then we consider the trim level: 65AMG.
+All the following process are quite similar than what has be shown above, so I intend to partially skip repetitive R codes and focus on display relevant plots.
+Considering this trim level: 65AMG, I choose a series of K values and plot the fit respectively.
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 3")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-16.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 5")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-17.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 10")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-18.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 15")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-19.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 25")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-20.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 50")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-21.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 75")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-22.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 100")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-23.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 150")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-24.png)
+
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 200")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-25.png)
+```r
+p_test = ggplot(data = D_test) + 
+  geom_point(mapping = aes(x = mileage, y = price), color='lightgrey') + 
+  theme_bw(base_size=18)
+
+p_test + geom_path(aes(x = mileage, y = ypred_knn3), color='red') + labs(title = "k = 233")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-26.png)
+
+Then I make a plot of RMSE versus K through helper functions(the same as what has been shown above).
+```r
+ggplot() + geom_path(aes(x = k, y =knn_test_rmse, color='red'))
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-28.png)
+
+Eventually, we can therefore determine the optimal value of K(when K = 11) from this trim and plot the corresponding fit.
+```r
+best_k = k[which.min(knn_test_rmse)]
+best_k
+
+knn_best = knn.reg(train = X_train, test = X_test, y = y_train, k=best_k)
+ypred_knn_best = knn_best$pred
+D_test$ypred_knn_best = ypred_knn_best
+p_test + geom_path(aes(x = mileage, y = ypred_knn_best), color='red') + labs(title = "the Best K for Trim 65AMG")
+```
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/q2-27.png)
+
+> Q: Which trim yields a larger optimal value of K? Why do you think this is?
+>> A: It depends since I randomly split the population into train group and test group, so every time running the R code I will get different value of optimal K.
