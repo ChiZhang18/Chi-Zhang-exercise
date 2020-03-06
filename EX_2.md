@@ -6,7 +6,7 @@ This report was made by Chi Zhang, UTEID: cz6753.
 Question 1: Saratoga House Prices
 ---------------------------------
 In this question, I am going to deal with the dataset on house prices in Saratoga, NY. First of all, I plan to build a baseline model using variables such as `lotSize`, `bedrooms`, `fireplaces`, `rooms`, `bathrooms`, `air conditioning`, `waterfront` and etc. as regressors and the model's corresponding coefficients has shown below.
-```
+```r
 model1 = lm(price ~ . - sewer - age - livingArea - landValue - pctCollege, data=SaratogaHouses)
 ##	    (Intercept)	  lotSize	bedrooms
 ##	217546.952	13850.891	1318.706
