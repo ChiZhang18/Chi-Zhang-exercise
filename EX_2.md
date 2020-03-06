@@ -80,9 +80,17 @@ Next we are going to measure the performance of two models with error rate, whic
 |---------|:---------:|
 | model 1 | 0.4297103 |
 | model 2 | 0.4094487 |
+
 After it, I find there exists only slight difference in the error rate between two models. Hence, I plan to perform robust test to predict recall rates under the scenarios of model1 and model2 respectively.
 I first randomly choose 200 samples and repeat them for 5 times to address the issue that **the radiologists don’t see the same patients**. Moreover, an additional row is added, which is arranged by repeated series radiologist13, radiologist34, radiologist66, radiologist89 and radiologist95. In this situation, 5 radiologists could see the mammogram of a single patient and thus the recall rates could reflect the performance of the radiologists.
 
+| Radiologist   |  Prob. of Recall (model1)           | Prob. of Recall (model2)          |
+|:--------------|------------------:------------------|-------------:---------------------|
+| radiologist13 |     0.1309659                       |0.1520413                          |
+| radiologist34 |     0.0804886                       |0.0673055                          |
+| radiologist66 |     0.1771984                       |0.2315687                          |
+| radiologist89 |     0.1919766                       |0.2360001                          |
+| radiologist95 |     0.1247765                       |0.1317192                          |
 
 Viewed from the table above, ranking of radiologist’s conservative characteristic under scenario of model1 is consistent with the results derived from model2: radiologist89 > radiologist66 > radiologist13 > radiologist95 > radiologist34. Therefore, the radiologist with # 89 is the most clinically conservative since his recall rate is highest under scenarios of both models, holding patient risk factors equal.
 Next, I need to determine whether radiologists are eﬀectively utilizing all of a patient’s clinical data to determine whether or not to recall a patient. I first develop four linear models that attempts to predict cancer rates based on the factors available in the dataset.
