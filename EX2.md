@@ -1,10 +1,12 @@
 Exercise 2
 ==========
+
 This report was made by Chi Zhang, UTEID: cz6753.
 Question 1: Saratoga House Prices
 ---------------------------------
 In this question, I am going to deal with the dataset on house prices in Saratoga, NY. First of all, I plan to build a baseline model using variables such as `lotSize`, `bedrooms`, `fireplaces`, `rooms`, `bathrooms`, `air conditioning`, `waterfront` and etc. as regressors and the corresponding model's coefficients has shown below.
 ```
+model1 = lm(price ~ . - sewer - age - livingArea - landValue - pctCollege, data=SaratogaHouses)
 ##	    (Intercept)	  lotSize	bedrooms
 ##	217546.952	13850.891	1318.706
 ##	   fireplaces	              bathrooms	rooms
@@ -18,11 +20,11 @@ In this question, I am going to deal with the dataset on house prices in Saratog
 ```
 While this model could give us a not bad picture, adding interaction between these might lead to conflation of estimator coefficients. Therefore, I intend to run the above regression by additionally adding a bunch of interaction terms.
 ```r
-lm_big = lm(price ~ (. - sewer - age - livingArea - landValue - pctCollege)^2, data=SaratogaHouses)
+model2 = lm(price ~ (. - sewer - age - livingArea - landValue - pctCollege)^2, data=SaratogaHouses)
 ```
 Viewed from the regression results, the model with pairwise interactions does draw a better picture and looks more efficient. However, adding interaction terms without logical selection would induce weakly significant variables and unnecessary redundancy. Hence, I discriminately screen out some seemingly useless interactions and add some factors which might be drivers to the house price in practical world.
 ```r
-model5 = price ~ landValue + lotSize*(bedrooms + bathrooms) + livingArea*(fuel+ heating + centralAir) + pctCollege*(fireplaces+age) + rooms
+model3 = price ~ landValue + lotSize*(bedrooms + bathrooms) + livingArea*(fuel+ heating + centralAir) + pctCollege*(fireplaces+age) + rooms
 ```
 After model selection, we compare out of sample predictions to see how eﬀective our regression model is and then calculate the average root mean square errors by repeating regression a hundred times for these three regressions respectively.
 |         | Prediction | AVG RMSE |
@@ -33,6 +35,7 @@ After model selection, we compare out of sample predictions to see how eﬀectiv
 
 Now, the best model that we solve is model 3, which is much better than the ones we derived in class. Hence, I decide to choose it as selected one. Moreover, considering that building a KNN model might better our outcomes, I ﬁrst need to standardize our variables and then run the KNN regression using the same variable as that in model 3.
 ![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/ex2-1.png)
+
 Since we are only interested in looking at the data where RMSE does better than the linear models, let us narrow down our K values up to 30. We can see below that the optimal K value seems to be closer to 11.
 Moreover, I also figure out the usage of the variables in both selected linear model and corresponding KNN model with minimizing RMSE. First let us recall the regression result of selected model:
 |                                   | coefficients.Estimate | coefficients.Std..Error |
@@ -61,6 +64,7 @@ Moreover, I also figure out the usage of the variables in both selected linear m
 | livingArea:centralAirNo           |     -2.527276e+01     |       5.479314e+00      |
 | pctCollege:fireplaces             |     -7.022711e+02     |       2.601372e+02      |
 | pctCollege:age                    |      1.042842e+01     |       4.879803e+00      | 
+
 Viewed from the regression results, there exists many factors that could influence the house price. First of all, the house price gets increased steeply with the increasing of the land value. Then the price is also driven by the number of bathrooms and rooms and are negatively related with number of bedrooms. That might be due to the reduction of each person’s limited activity space. Moreover, central airconditioning is another driving factor in the determination of prices. Based on the type of fuel used, the price of house varies from high for gas to low for electricity. Hot air heating also drives the prices up as compared to electricity or water. Being a new construction however, starkly aﬀects the price of the house.
 
 Question 2:
