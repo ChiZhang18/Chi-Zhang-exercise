@@ -82,8 +82,9 @@ Next we are going to measure the performance of two models with error rate, whic
 | model 2 | 0.4094487 |
 After it, I find there exists only slight difference in the error rate between two models. Hence, I plan to perform robust test to predict recall rates under the scenarios of model1 and model2 respectively.
 I first randomly choose 200 samples and repeat them for 5 times to address the issue that **the radiologists don’t see the same patients**. Moreover, an additional row is added, which is arranged by repeated series radiologist13, radiologist34, radiologist66, radiologist89 and radiologist95. In this situation, 5 radiologists could see the mammogram of a single patient and thus the recall rates could reflect the performance of the radiologists.
+
 | Radiologist   |  Prob. of Recall (model1)           | Prob. of Recall (model2)          |
-|:--------------|-------------:                       |-------------:                     |
+|:--------------|------------------:------------------|-------------:---------------------|
 | radiologist13 |     0.1309659                       |0.1520413                          |
 | radiologist34 |     0.0804886                       |0.0673055                          |
 | radiologist66 |     0.1771984                       |0.2315687                          |
@@ -150,11 +151,11 @@ model4 <<- glm(shares ~ ((shares ~ . - weekday_is_friday - num_videos - data_cha
 ```
 The RMSE output for each model is listed in the following table:
 |              | AVG. Accurate Rate|
-|-----------   |--------:-----|
-| share-Model1 |      0.626298|
-| share-Model2 |      0.602651|
-| share-Model3 |      0.635417|
-| share-Model4 |      0.618867|
+|-----------   |--------:----------|
+| share-Model1 |      0.626298     |
+| share-Model2 |      0.602651     |
+| share-Model3 |      0.635417     |
+| share-Model4 |      0.618867     |
 
 Viewed from the results, model3 turns out to be comparatively better, providing us with higher average accurate rate. 
 We now report the confusion matrix with the logit model which provides us with the highest accuracy rate.
