@@ -2,6 +2,7 @@ Exercise 2
 ==========
 
 This report was made by Chi Zhang, UTEID: cz6753.
+
 Question 1: Saratoga House Prices
 ---------------------------------
 In this question, I am going to deal with the dataset on house prices in Saratoga, NY. First of all, I plan to build a baseline model using variables such as `lotSize`, `bedrooms`, `fireplaces`, `rooms`, `bathrooms`, `air conditioning`, `waterfront` and etc. as regressors and the corresponding model's coefficients has shown below.
