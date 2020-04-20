@@ -220,10 +220,7 @@ library(arules)
 library(arulesViz)
 ```
 
-# Exercise 4
-By Chong Wang, Tianping Wu, Zhenning Zhao
-
-## Exercise 4.1 Clustering and PCA
+## Exercise 3.3 Clustering and PCA
 ```{r setup_4.1, echo=FALSE, warning=FALSE}
 myurl <- "https://raw.githubusercontent.com/znzhao/ECO395M-HW-zz5339/master/HW4/wine.csv"
 wine <- read.csv(url(myurl))
@@ -349,8 +346,8 @@ In conclusion, we might not be able to tell the difference among the different q
 
 
 
-## Exercise 4.2 Market segmentation
-### 4.2.1 Data pre-process
+## Exercise 3.4 Market segmentation
+### Data pre-process
 First we decided to eliminate as many bots as possible from the slip through. All users with spam posts are assumed to be pots as only a few dozens of them had spam posts. Users with pornography posts are a bit complicated because more than a few couple hundred users had them and at the same time also posted significant amount of other types of posts, so they might just be actual human users with interests in pornography to some extent . To distinguish between humans and bots, we set an arbitrary rule of 20/80 to delete all users having more than 20% of their total posts in pornagraphy. Next, column chatter and uncategorized  are deleted because they are the labels that do not fit at all into any of the interest categories. At the end, we are left with 7,676 users to determine market segmentation using clustering and principal components analysis methodologies. At last, there are 33 variables left.
 
 ```{r setup_4.2.1, echo=FALSE, warning=FALSE}
@@ -375,7 +372,7 @@ SocialMarket_scaled <- scale(SocialMarket, center=TRUE, scale=TRUE)
 N = nrow(SocialMarket)
 ```
 
-### 4.2.2 Clustering
+### Clustering
 In order to determine market segment by k-means clustering, we must first select the number of initial centroids, or in other words, the number of user types. 3 types of supporting analysis were used to help us determine the quantity: Elbow plot(SSE), CH index and Gap statistics.
 
 ```{r graph_4.2.1, echo=FALSE, warning=FALSE}
@@ -475,7 +472,7 @@ ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
 ```
 #### 7. Everything, shopping, photo sharing 
 From the graphs above, we can see the last group being a very special one, showing moderate interests in almost all areas (compared to strong distinct tastes in other groups).  Within the group, interests toward shopping and photo sharing seems to stand out.
-### 4.2.3 Principal Components Analysis
+### Principal Components Analysis
 After data pre-process, In order to reduce dimension of 33 different categories variables, we decided to use principal components analysis methods to find principal components, which can explain most of the variability in the data.
 After center and scale the data, we did the correlation analysis of total 33 categories first. In the correlation matrix above, we found that the correlation of those categories are relatively weak, as most correlation coefficients are below 0.3. Thus, we suppose that the proportion of variance explained by most dominant principal components will not be as high as we expected.
 We first got the loadings matrix and scores matrix from principal components methods. Then we calculated proportion of variance explained (PVE) to decide the number of principal components that we need to choose. 
@@ -556,7 +553,7 @@ In the 5th market segment, top 5 interest of followers are "online_gaming", "spo
 In the 6th market segment, top 5 interest of followers are "automotive", "shopping", "photo_sharing", "news" and "current_events".
 In the 7th market segment, top 5 interest of followers are "news", "automotive", "tv_film", "art" and "beauty". 
 Finally, we extracted 7 market segments.
-### 4.2.4 Conclusion
+### Conclusion
 From the clustering and principal component analysis, we extracted 7 analysis from both of them. 
 The first market segment found by clustering is similar with the third segment found by PCA as they have same interests - Personal fitness, outdoors and health & nutrition. 
 The second market segment found by clustering is similar with the fourth segment found by PCA as they have same interests - Fashion, cooking, beauty, shopping and photo sharing. 
