@@ -1,0 +1,575 @@
+---
+title: "Exercise 3"
+author: "Chi Zhang"
+output:
+  md_document:
+    variant: markdown_github
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(gamlr)
+```
+
+# Exercise 3
+
+## Exercise 3.1
+### Build the best predictive model possible for price.
+```{r setup_3.1, echo=FALSE, warning=FALSE}
+urlfile<-'https://raw.githubusercontent.com/znzhao/ECO395M-HW-zz5339/master/HW1/greenbuildings.csv'
+greenbuildings<-read.csv(url(urlfile))
+greenbuildings =na.omit(greenbuildings)
+greenbuildings$size = greenbuildings$size/1000
+# clean data by deleting the data with occupacy rate equal to 0%
+GB_cleaned <- subset(greenbuildings,(greenbuildings$leasing_rate != 0))
+```
+
+Before assembling the model, we first cleaned the data. We deleted buildings with 0% leasing rate and lowered the scale of size of the buildings by 1,000 square foot to comply with the computation limit. As we mentioned in the first exercise, we deleted the data with occupancy rate equal to 0% because we believe that these buildings are abnormal.
+Next, we used the stepwise selection method to assemble the predictive model for price. Two models were built with a minor tweak.
+
+The first model considered LEED and EnergyStar separately and the second model combined them into a single "green certified" category. In both models, we started with the null model by regressing rent on one, followed by adding new variables as demonstrated in the forward selection method. Using this model as our starting point model, we ran stepwise selection and obtained our final model.
+
+The two selected models are shown below. Including the interaction terms, we had 45 and 44 significant coefficients, respectively. 
+
+```{r model1, echo=FALSE, warning=FALSE}
+## stepwise model 1.1 LEED & Energy
+full = lm(Rent ~ .-CS_PropertyID-green_rating, data=GB_cleaned)
+null = glm(Rent~1, data=GB_cleaned)
+fwd = step(null, scope=formula(full), dir="forward", trace = FALSE)
+big  = lm(Rent ~ (.-CS_PropertyID-green_rating)^2, data=GB_cleaned)
+stepwise = step(null, scope=formula(big), dir="both", trace = FALSE)
+#45 used, null = Forward, then stepwise 
+model1 = formula(stepwise)
+model1
+```
+
+```{r model2, echo=FALSE, warning=FALSE}
+## stepwise model 1.2 Green-rating
+full = lm(Rent ~ .-CS_PropertyID-LEED-Energystar, data=GB_cleaned)
+null = lm(Rent~1, data=GB_cleaned)
+fwd = step(null, scope=formula(full), dir="forward", trace = FALSE)
+big  = lm(Rent ~ (.-CS_PropertyID-LEED-Energystar)^2, data=GB_cleaned)
+stepwise = step(null, scope=formula(big), dir="both", trace = FALSE)
+#44 used, null = Forward, then stepwise 
+model2 = formula(stepwise)
+model2
+```
+
+We then used the Lasso model to assemble the best predictive model possible for price. Two models were also built with this method, the model considering LEED and EnergyStar separately, and the model combining them into a single "green certified" category. We considered the interaction terms as well. 
+
+In the first model, from the path plot below we could see that minimum AIC occurs at segment 65. 
+
+```{r pathplot1, echo=FALSE, warning=FALSE}
+## Gamma Lasso model 2.1 LEED & Energy
+gbx = sparse.model.matrix(Rent ~ (.-CS_PropertyID-green_rating)^2, data=GB_cleaned)[,-1] 
+gby = GB_cleaned$Rent
+gblasso = gamlr(gbx, gby, lambda.min.ratio=0.000001)
+plot(gblasso) # the path plot!
+```
+
+Thus, we used the model at the segment 65 and chose 184 coefficients. The specific model is shown below. 
+
+```{r model3, echo=FALSE, warning=FALSE}
+gbbeta = coef(gblasso)
+# 184 used in Lasso
+# sum(gbbeta!=0)
+p1 <- dimnames(gbbeta)[[1]]
+p2 <- c()
+for (i in c(1:length(gbbeta))){
+  p2 <- c(p2, as.list(gbbeta)[[i]])
+}
+model3 = c("Rent ~ ")
+for (i in c(2:length(gbbeta))){
+  if (p2[i] != 0){
+    if (model3 == "Rent ~ "){
+      model3 = paste(model3, p1[i])
+    }
+    else{
+      model3 = paste(model3,"+", p1[i])
+    }
+  }
+}
+model3 <- as.formula(model3)
+model3
+```
+
+In the second model, from the path plot below we could see that minimum AIC occurs at segment 66. 
+
+```{r pathplot2, echo=FALSE, warning=FALSE}
+## Gamma Lasso model 2.2 Green-rating
+gbx = sparse.model.matrix(Rent ~ (.-CS_PropertyID-LEED-Energystar)^2, data=GB_cleaned)[,-1] 
+gby = GB_cleaned$Rent
+gblasso = gamlr(gbx, gby, lambda.min.ratio=0.000001)
+plot(gblasso) # the path plot!
+```
+
+Thus, we used the model at the segment 66 and chose 168 coefficients. The specific model is shown below.
+
+```{r model4, echo=FALSE, warning=FALSE}
+gbbeta2 = coef(gblasso)
+# 168 used in Lasso
+# sum(gbbeta2!=0)
+p1 <- dimnames(gbbeta2)[[1]]
+p2 <- c()
+for (i in c(1:length(gbbeta2))){
+  p2 <- c(p2, as.list(gbbeta2)[[i]])
+}
+model4 = c("Rent ~ ")
+for (i in c(2:length(gbbeta2))){
+  if (p2[i] != 0){
+    if (model4 == "Rent ~ "){
+      model4 = paste(model4, p1[i])
+    }
+    else{
+      model4 = paste(model4,"+", p1[i])
+    }
+  }
+}
+model4 <- as.formula(model4)
+model4
+```
+
+Lastly, in order to compare 4 models above, we used k-fold cross validation. We arbitrarily set k equal to 10 and calculated the CVs. We found that the CVs of the stepwise selection models are lower than those by Lasso method. The second stepwise model with the combined "green certified" category had the minimum CV, and therefore it is our best predictive model possible for rent price.
+
+```{r comparing, echo=FALSE, warning=FALSE}
+N = nrow(GB_cleaned)
+# Create a vector of fold indicators
+K = 10
+fold_id = rep_len(1:K, N)  # repeats 1:K over and over again
+fold_id = sample(fold_id, replace=FALSE) # permute the order randomly
+step_err_save = rep(0, K)
+step_err_save2 = rep(0, K)
+lasso_err_save = rep(0, K)
+lasso_err_save2 = rep(0, K)
+for(i in 1:K) {
+  train_set = which(fold_id != i)
+  y_test = GB_cleaned$Rent[-train_set]
+  step_model = lm(model1, data=GB_cleaned[train_set,])
+  step_model2 = lm(model2, data=GB_cleaned[train_set,])
+  lasso_model = lm(model3, data=GB_cleaned[train_set,])
+  lasso_model2 = lm(model4, data=GB_cleaned[train_set,])
+  
+  yhat_test1 = predict(step_model, newdata=GB_cleaned[-train_set,])
+  step_err_save[i] = mean((y_test - yhat_test1)^2)
+  
+  yhat_test2 = predict(step_model2, newdata=GB_cleaned[-train_set,])
+  step_err_save2[i] = mean((y_test - yhat_test2)^2)
+  
+  yhat_test3 = predict(lasso_model, newdata=GB_cleaned[-train_set,])
+  lasso_err_save[i] = mean((y_test - yhat_test3)^2)
+  
+  yhat_test4 = predict(lasso_model2, newdata=GB_cleaned[-train_set,])
+  lasso_err_save2[i] = mean((y_test - yhat_test4)^2)
+}
+# RMSE
+c(sqrt(mean(step_err_save)),sqrt(mean(step_err_save2)),sqrt(mean(lasso_err_save)),sqrt(mean(lasso_err_save2)))
+```
+
+### Use this model to quantify the average change in rental income per square foot (whether in absolute or percentage terms) associated with green certification, holding other features of the building constant.
+
+```{r result, echo=FALSE, warning=FALSE}
+step_model2 = lm(model2, data=GB_cleaned)
+temp = coef(step_model2)
+c(temp["green_rating"],temp["green_rating:amenities"])
+```
+
+Holding all other significant features of the building fixed, green certified (LEED  or EnergyStar) buildings are expected to be 2.29 dollars per square foot per calendar year more expensive in comparison to non-green buildings. However, interestingly when buildings have amenities available on site, the positive effect of the green certification on rental income is significantly neutralized, an expected decrease of 2.15 dollars per square foot per calendar year. 
+
+### Assess whether the "green certification" effect is different for different buildings, or instead whether it seems to be roughly similar across all or most buildings.
+
+In the model selected by stepwise method with combined green rate variable, we could see that holding all other significant features of the building fixed, green certification buildings with amenities is 2.15 dollar per square foot per calendar year less than green certification buildings without amenities. It shows that "green certification" effect is different for buildings of with and without amenities. The intuition behind is that the green buildings with amenities are normally considered as commercial buildings, so the buildings need to pay the energy fee as commercial rate, which is normally higher than residential rate. Thus, residents in the green buildings with amenities still need to pay more than those in the green buildings without amenities. Thus, the owners of green buildings with amenities will lower the rent fee in order to attract more residents. 
+
+## Exercise 3.2
+
+### Why can’t I just get data from a few different cities and run the regression of “Crime” on “Police” to understand how more cops in the streets affect crime?
+
+We cannot just do the simple regression of  “Crime” on “Police” because although Crime rate depends on police force, the demand of police force might also depend on the crime rate. One could assume that when a city put more police on the street the crime rate tends to drop, and more police is needed if the crime rate of a city is high. So it’s actually 2 equations other than one to be regressed. However, the data that we have on hand mixed these two effects so that we cannot tell what is the cause for the changes in the crime rate. So we cannot simply do the regression of “Crime” on “Police”.
+
+### How were the researchers from UPenn able to isolate this effect? Briefly describe their approach and discuss their result in the “Table 2” below, from the researcher's paper.
+
+The researchers from UPenn took the endogeneity problem into consideration and included an instrument variable that is days with a high alert and a control variable that is ridership in order to isolate this effect. They first collected DC’s crime data as well as data of days when there was a high alert for potential terrorist attacks.
+
+Because in the days when there’s a high alert for potential terrorist attacks, the mayor of DC will respond to that actively by sending more cops in the street, that decision made by mayor has no intention to reduce the crime in the street. In the days when there’s a high alert, people may not go out, thus the chances of the crime will decrease which induce less crimes that was not caused by more cops in those days. The researchers then chose ridership as a control variable. If the number of ridership is as usual, that means the number of people do not decrease due to the high alert;  If the number of ridership is less as usual, that means the number of people decrease due to the high alert. Thus, researchers need to control the ridership. From table 1, we saw that days with a high alert have lower crimes, since the coefficient is -6.046, which is also significant at 5% level after including the control variable ridership. 
+
+Thus, holding the number of people go out in the days when there’s a high alert fixed (holding the ridership fixed), the crime becomes lower in those days is due to more cops in the street.
+
+### Why did they have to control for Metro ridership? What was that trying to capture?
+
+Although the technology mentioned above is very genius, someone might argue that it might not be true that the correlation between the alert and the crime rate is zero. During the high alert days people might be too scared to go out, so there might be less chances for crime opportunities, leading to a lower crime rate. 
+
+Hence, the researcher controlled for Metro ridership (as a way of measuring population outdoor activeness) and rerun the regression again. If the result of regressing crime rate on police force controlling the ridership is still negative, then it’s more convincible to say that the regression captures the influence of police force on crime rate.  
+
+From the second regression of table 2, it is shown that holding the ridership fixed, the parameter in front of the police force is still negative. This result in some degree rules out the possibility that mentioned above. However, we can’t for sure prove that more cops leads to less crime. The street criminals might be too afraid of terrorists and decide not to go out and during a high alert day. This would lead to a reduction in crime that is not related to more police in the streets.
+
+### Below I am showing you "Table 4" from the researchers' paper. Just focus on the first column of the table. Can you describe the model being estimated here? What is the conclusion?
+
+Table 4 demonstrates on effect of high alert on crime across different districts in DC. By having models with interaction terms between districts and alert days, it can be shown that only the effect in district 1 is significant. High alert days with more cops bring the daily total number of crimes down in district 1. This makes sense because D.C. would most likely deploy high ratio of the extra cops in this district for security reasons as terrorists targets like US Capitol,the White House, Federal Triangle and US Supreme Court are all there. The effects in the other districts are insignificant as the confidence interval lies on the coefficient of zero.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(LICORS)
+library(ISLR)
+library(mosaic)
+library(foreach)
+library(cluster)
+library(corrplot)
+library(plotly)
+library(GGally)
+library(ggplot2)
+library(arules)
+library(arulesViz)
+```
+
+# Exercise 4
+By Chong Wang, Tianping Wu, Zhenning Zhao
+
+## Exercise 4.1 Clustering and PCA
+```{r setup_4.1, echo=FALSE, warning=FALSE}
+myurl <- "https://raw.githubusercontent.com/znzhao/ECO395M-HW-zz5339/master/HW4/wine.csv"
+wine <- read.csv(url(myurl))
+```
+
+### Distinguishing the color of the wine
+
+First we normalize the data. After demeaning and scaling with their standard deviation, we end up with a 6,497*11 dataset. The following is the heatmap of the correlation between these 11 chemical properties.
+
+Although there are 11 chemical properties, we choose to visualize the data through only 4 dimensions: total sulfur dioxide, density, pH, and volatile acidity. The following graph shows the distribution of the red wines and the white wine on these 4 dimensions. We randomly pick these 4 properties to give a first taste of the data. From the graph we can tell that the red wine and the white wine have different features, so it is highly possible for us to distinguish these two different type of wines.
+
+```{r plot4.1.1, echo=FALSE, warning=FALSE}
+# Center and scale the data, data visualization
+X = wine[,1:11]
+X = scale(X, center=TRUE, scale=TRUE)
+mu = attr(X,"scaled:center")
+sigma = attr(X,"scaled:scale")
+```
+
+```{r plot4.1.2, echo=FALSE, warning=FALSE}
+# distribution plot
+XX = subset(wine,select = c("total.sulfur.dioxide","density","pH","volatile.acidity"))
+ggpairs(XX,aes(col = wine$color, alpha = 0.8))
+```
+
+Since we have already have a basic impression of 2 categories in mind, we choose to do clustering with K=2.
+
+First, by using K-means, we can divide the wines into 2 category. Visualizing through the total sulfur dioxide and the density, we can tell that K=means did an excellent work distinguishing red wines and white wines.
+
+```{r plot4.1.3, echo=FALSE, warning=FALSE}
+# First do clusting
+clust1 = kmeans(X, 2, nstart=20)
+qplot(wine$density,wine$total.sulfur.dioxide, data=wine, shape=factor(clust1$cluster), col=factor(wine$color))
+res <- cor(X)
+```
+
+More specifically, we can calculate the accuracy rate by looking at the following confusion matrix. The accuracy rate for K-means is (4,830+1,575)/6,497 = 98.6%, which is pretty high. This means by looking at the chemical properties, the K-means can characterize the red wine and white wine almost perfectly.
+
+```{r table4.1.4, echo=FALSE, warning=FALSE}
+# table for the correctly clustering
+xtabs(~clust1$cluster + wine$color)
+table1 = xtabs(~clust1$cluster + wine$color)
+```
+
+Second, we use the PCA method. The summary of the scores is listed below. The first four principal components capture about 73% of the variance in the data. So I choose to use the first four principal components to do the clustering. The following is the graph of different wines and different categories on the scale of the first two components. As the graph shows, the PCA is also a good way to differ red wines from white wines.
+```{r table4.1.5, echo=FALSE, warning=FALSE}
+# Next try PCA
+pc = prcomp(X, scale=TRUE)
+summary(pc)
+loadings = pc$rotation
+scores = pc$x
+# PCA for clustering
+clustPCA = kmeans(scores[,1:4], 2, nstart=20)
+qplot(scores[,1], scores[,2], color=factor(wine$color), shape=factor(clustPCA$cluster), xlab='Component 1', ylab='Component 2')
+```
+
+More specifically, we can calculate the accuracy rate by looking at the following confusion matrix. The accuracy rate for K-PCA is (4,818+1,575)/6,497 = 98.4%, which is slightly lower than the K-mean result. In conclusion, to differ white wines and red wines, we can simply use the K-mean method and it will give us a pretty good result.
+
+```{r table4.1.6, echo=FALSE, warning=FALSE}
+# table for the correctly clustering
+xtabs(~clustPCA$cluster + wine$color)
+tablePCA = xtabs(~clustPCA$cluster + wine$color)
+```
+
+### Distinguishing the quality of the wine
+
+Before we do the clustering, the following barplot shows the distribution of the different qualities. There are only 7 different qualities of wines in the dataset. It seems that most of the wines have quality of 5 or 6, and only a few of them have very high or very low quality. Since normally the clustering method would divide the data into different categories quite equally, it might be very hard for K-means algorithm to successfully identify the quality of the wines.
+
+```{r graph4.1.7, echo=FALSE, warning=FALSE}
+# by the barplot we can see that most wines' quality is 6
+ggplot(wine)+
+  geom_bar(aes(x = quality))
+``` 
+
+What’s more, by data visualization, it seems that the wines with different qualities have similar chemistry features, making it even more difficult to identify the quality of the wine.
+
+```{r graph4.1.8, echo=FALSE, warning=FALSE}
+# it seems very hard to cluster them into 7 categories
+ggpairs(XX,aes(col = factor(wine$quality),alpha = 0.6))
+```
+
+First, by using K-means, we can divide the wines into 7 category. The perfect density graph should be as follow. 
+
+```{r graph4.1.9, echo=FALSE, warning=FALSE}
+#the perfect density plot
+ggplot(wine)+ geom_density(aes(x = wine$quality, col = factor(wine$quality), fill = factor(wine$quality)), alpha = 0.3)
+```
+
+However, the density of different wine should be concentrating on different categories. The result, as is shown in the following density graph and the confusion matrix, is not so good. There is no obvious pattern that could be pointed out from the clustering. Hence the K-mean method fails at this challenge, just as we expected.
+
+```{r graph4.1.10, echo=FALSE, warning=FALSE}
+# First do clusting
+clust2 = kmeans(X, 7, nstart=20)
+# table for the correctly clustering
+xtabs(~clust2$cluster + wine$quality)
+table2 = xtabs(~clust2$cluster + wine$quality)
+# look what we got here! it looks very different from the perfect graph.
+ggplot(wine)+ geom_density(aes(x = clust2$cluster, col = factor(wine$quality), fill = factor(wine$quality)), alpha = 0.3)
+```
+
+Second, we use the PCA method. Still we choose to use the first four principal components to do the clustering with K=7. The following is the graph of different wines qualities and different categories on the scale of the first two components. From the graph we can hardly tell any relations between the quality of the wine and the categories that we find.
+
+```{r graph4.1.11, echo=FALSE, warning=FALSE}
+# Next try PCA
+pc = prcomp(X, scale=TRUE)
+loadings = pc$rotation
+scores = pc$x
+# PCA for clustering
+clustPCA2 = kmeans(scores[,1:4], 7, nstart=20)
+qplot(scores[,1], scores[,2], color=factor(wine$quality), shape = factor(clustPCA2$cluster) , xlab='Component 1', ylab='Component 2')
+```
+
+The similar story can be told by looking at the confusion matrix and the density graph. However, the PCA method is slightly better than the K-means, since the high quality wine tends to cluster into similar categories. Saying that, the overall result of the prediction is still a nightmare. The chemistry feature just might not be the reason for the different qualities of the wine.
+
+```{r graph4.1.12, echo=FALSE, warning=FALSE}
+# table for the correctly clustering
+xtabs(~clustPCA2$cluster + wine$quality)
+tablePCA = xtabs(~clustPCA2$cluster + wine$quality)
+ggplot(wine)+ geom_density(aes(x = clustPCA2$cluster, col = factor(wine$quality), fill = factor(wine$quality)), alpha = 0.3)
+```
+
+In conclusion, we might not be able to tell the difference among the different quality wine by only looking at the chemical features of the wine.
+
+
+
+## Exercise 4.2 Market segmentation
+### 4.2.1 Data pre-process
+First we decided to eliminate as many bots as possible from the slip through. All users with spam posts are assumed to be pots as only a few dozens of them had spam posts. Users with pornography posts are a bit complicated because more than a few couple hundred users had them and at the same time also posted significant amount of other types of posts, so they might just be actual human users with interests in pornography to some extent . To distinguish between humans and bots, we set an arbitrary rule of 20/80 to delete all users having more than 20% of their total posts in pornagraphy. Next, column chatter and uncategorized  are deleted because they are the labels that do not fit at all into any of the interest categories. At the end, we are left with 7,676 users to determine market segmentation using clustering and principal components analysis methodologies. At last, there are 33 variables left.
+
+```{r setup_4.2.1, echo=FALSE, warning=FALSE}
+urlfile<-'https://raw.githubusercontent.com/jgscott/ECO395M/master/data/social_marketing.csv'
+#36 different categories
+SocialMarket <- read.csv(url(urlfile), row.names=1)
+# head(SocialMarket, 10)
+#delete users with spam
+SocialMarket<-SocialMarket[(SocialMarket$spam==0),]
+#delete uncategorized label "chatter"
+SocialMarket <- subset(SocialMarket, select = -c(chatter, uncategorized))
+#add tweet sum & calculate adult ratio & delete adult ratio more than 20%
+SocialMarket <- cbind(tweet_sum = rowSums(SocialMarket), SocialMarket)
+SocialMarket <- cbind(adult_ratio = 1, SocialMarket)
+SocialMarket$adult_ratio <- SocialMarket$adult/SocialMarket$tweet_sum
+SocialMarket<-SocialMarket[(SocialMarket$adult_ratio<0.2),]
+#delete uncategorized label "unused attributes"
+SocialMarket <- subset(SocialMarket, select = -c(adult_ratio, tweet_sum, spam))
+# Center/scale the data
+#SocialMarket = SocialMarket[,-(1,35)]
+SocialMarket_scaled <- scale(SocialMarket, center=TRUE, scale=TRUE) 
+N = nrow(SocialMarket)
+```
+
+### 4.2.2 Clustering
+In order to determine market segment by k-means clustering, we must first select the number of initial centroids, or in other words, the number of user types. 3 types of supporting analysis were used to help us determine the quantity: Elbow plot(SSE), CH index and Gap statistics.
+
+```{r graph_4.2.1, echo=FALSE, warning=FALSE}
+#K-grid to find the optimal K
+k_grid = seq(2, 20, by=1)
+SSE_grid = foreach(k = k_grid, .combine='c') %do% {
+  cluster_k = kmeans(SocialMarket_scaled, k, nstart=50)
+  cluster_k$tot.withinss
+}
+#graphics.off()
+#par("mar")
+par(mar=c(4,4,4,4))
+plot(k_grid, SSE_grid, xlab="K",ylab="SSE Grid", sub="SSE Grid vs K")
+```
+
+```{r graph_4.2.1.1, echo=FALSE, warning=FALSE}
+#CH-grid to find the optimal K
+CH_grid = foreach(k = k_grid, .combine='c') %do% {
+  cluster_k = kmeans(SocialMarket_scaled, k, nstart=20)
+  W = cluster_k$tot.withinss
+  B = cluster_k$betweenss
+  CH = (B/W)*((N-k)/(k-1))
+  CH
+}
+plot(k_grid, CH_grid, xlab="K",
+     ylab="CH Grid",
+     sub="CH Grid vs K")
+```
+
+```{r graph_4.2.1.2, echo=FALSE, warning=FALSE}
+#Gap statistics
+Market_gap = clusGap(SocialMarket_scaled, FUN = kmeans, nstart = 20, K.max = 10, B = 10)
+plot(Market_gap)
+```
+
+As shown above, the results are subtle and therefore difficult to determine the best number for K. We eventually picked K=7 for two reasons, 1. we observed a weak signal of dipping in the Gap statistic graph and 2. we found about the equal number of interest groups with relatively strong correlated interests from our correlation analysis as shown below.
+
+```{r graph_4.2.2, echo=FALSE, warning=FALSE}
+#correlation and visualization
+res <- cor(SocialMarket_scaled)
+corrplot(res, method = "color", tl.cex = 0.5, tl.col="black")
+```
+
+We created this heat map hoping to have a deeper analysis of each cluster. Even though we would never know the full picture of each cluster, we believed interests with high proximity, or high correlation, would most likely be fit into same cluster. The more common interests we find from each cluster, the better we can describe each market segment and therefore are able to help our client creating cluster based market strategies.
+
+```{r model_4.2.1, echo=FALSE, warning=FALSE}
+# k-means analysis
+clust1 = kmeans(SocialMarket_scaled, centers=7, nstart=25)
+```
+
+Some distinct market segments with highly correlated interests are listed below based on the heat map
+
+
+#### 1. Personal fitness, outdoors, health & nutrition
+
+
+```{r graph_4.2.3, echo=FALSE, warning=FALSE}
+XX = subset(SocialMarket,select = c("personal_fitness","health_nutrition","outdoors"))
+ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
+```
+
+
+#### 2. Fashion, cooking, beauty, shopping, photo sharing
+
+
+```{r graph_4.2.4.1, echo=FALSE, warning=FALSE}
+XX = subset(SocialMarket,select = c("fashion","cooking","beauty", "shopping", "photo_sharing"))
+ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
+```
+
+
+#### 3. Online gaming, college&university, sports playing
+
+
+```{r graph_4.2.5, echo=FALSE, warning=FALSE}
+XX = subset(SocialMarket,select = c("online_gaming","college_uni","sports_playing"))
+ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
+```
+
+
+#### 4. Sports fandom, food, family, religion, parenting, school
+
+
+``````{r graph_4.2.6.1, echo=FALSE, warning=FALSE}
+XX = subset(SocialMarket,select = c("sports_fandom","parenting","school","food", "family"))
+ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
+```
+#### 5. Politics, news, computers, travel, automobiles
+```{r graph_4.2.7.1, echo=FALSE, warning=FALSE}
+XX = subset(SocialMarket,select = c("politics","news","computers", "travel", "automotive"))
+ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
+```
+#### 6. TV film, art, music
+```{r graph_4.2.8, echo=FALSE, warning=FALSE}
+XX = subset(SocialMarket,select = c("tv_film","art","music"))
+ggpairs(XX,aes(col = factor(clust1$cluster), alpha = 0.8))
+```
+#### 7. Everything, shopping, photo sharing 
+From the graphs above, we can see the last group being a very special one, showing moderate interests in almost all areas (compared to strong distinct tastes in other groups).  Within the group, interests toward shopping and photo sharing seems to stand out.
+### 4.2.3 Principal Components Analysis
+After data pre-process, In order to reduce dimension of 33 different categories variables, we decided to use principal components analysis methods to find principal components, which can explain most of the variability in the data.
+After center and scale the data, we did the correlation analysis of total 33 categories first. In the correlation matrix above, we found that the correlation of those categories are relatively weak, as most correlation coefficients are below 0.3. Thus, we suppose that the proportion of variance explained by most dominant principal components will not be as high as we expected.
+We first got the loadings matrix and scores matrix from principal components methods. Then we calculated proportion of variance explained (PVE) to decide the number of principal components that we need to choose. 
+```{r table_4.2.1, echo=FALSE, warning=FALSE}
+urlfile<-'https://raw.githubusercontent.com/jgscott/ECO395M/master/data/social_marketing.csv'
+social_marketing = read.csv(url(urlfile), row.names=1)
+#delete users with spam
+social_marketing = social_marketing[(social_marketing$spam==0),]
+#delete uncategorized label "chatter"
+social_marketing = subset(social_marketing, select = -c(chatter, uncategorized))
+#add tweet sum & calculate adult ratio & delete adult ratio more than 20%
+social_marketing = cbind(tweet_sum = rowSums(social_marketing), social_marketing)
+social_marketing = cbind(adult_ratio = 1, social_marketing)
+social_marketing$adult_ratio = social_marketing$adult/social_marketing$tweet_sum
+social_marketing = social_marketing[(social_marketing$adult_ratio<0.2),]
+#delete uncategorized label "unused attributes"
+social_marketing = subset(social_marketing, select = -c(adult_ratio, tweet_sum, spam))
+#center and scale the data
+social_marketing = scale(social_marketing, center=TRUE, scale=TRUE)
+# correlation
+cor=cor(social_marketing)
+# PCA
+pca = prcomp(social_marketing,scale=TRUE)
+loadings = pca$rotation
+scores = pca$x
+# PVE
+VE = pca$sdev^2
+PVE = VE / sum(VE)
+round(PVE, 2)
+```
+In the above table, we can see that the first eight principal components can explain most of the variability. The first principal component explains 13% of the variability; the second principal component explains 8% of the variability; the third principal component explains 8% of the variability;the fourth principal component explains 7% of the variability; the fifth principal component explains 7% of the variability; the sixth principal component explains 5% of the variability; the seventh principal component explains 4% of the variability; the eighth principal component explains 4% of the variability. Together, the first eight principal components explain 56% of the variability.
+```{r graph_4.2.9, echo=FALSE, warning=FALSE}
+PVEplot = qplot(c(1:33), PVE) + 
+  geom_line() + 
+  xlab("Principal Component") + 
+  ylab("PVE") +
+  ggtitle("Scree Plot") +
+  ylim(0, 0.15)
+PVEplot
+```
+```{r graph_4.2.10, echo=FALSE, warning=FALSE}
+cumPVE = qplot(c(1:33), cumsum(PVE)) + 
+  geom_line() + 
+  xlab("Principal Component") + 
+  ylab(NULL) +
+  ggtitle("Cumulative Scree Plot") +
+  ylim(0,1)
+cumPVE
+```
+In the PVE Plot, we can see that between eighth and ninth components, there’s a significant gap in the Scree Plot. Also, from the Cumulative PVE Plot, we can find that first eight principal components can explain more than 50% of the total variability. Thus, we choose 8 principal components to divide the market of NutrientH20 into 8 segments. The characteristics of these 8 market segments are actually latent factor inferred from 33 interests categories.
+Then we got top 5 interests of followers of NutrientH20 in each market segment.
+```{r table_4.2.2, echo=FALSE, warning=FALSE}
+# extract market segments
+o1 = order(loadings[,1], decreasing=TRUE)
+colnames(social_marketing)[head(o1,5)]
+o2 = order(loadings[,2], decreasing=TRUE)
+colnames(social_marketing)[head(o2,5)]
+o3 = order(loadings[,3], decreasing=TRUE)
+colnames(social_marketing)[head(o3,5)]
+o4 = order(loadings[,4], decreasing=TRUE)
+colnames(social_marketing)[head(o4,5)]
+o5 = order(loadings[,5], decreasing=TRUE)
+colnames(social_marketing)[head(o5,5)]
+o6 = order(loadings[,6], decreasing=TRUE)
+colnames(social_marketing)[head(o6,5)]
+o7 = order(loadings[,7], decreasing=TRUE)
+colnames(social_marketing)[head(o7,5)]
+o8 = order(loadings[,8], decreasing=TRUE)
+colnames(social_marketing)[head(o8,5)]
+```
+In the 1st market segment, top 5 interest of followers are "religion", "food", "parenting", "sports_fandom" and "school".
+In the 2nd market segment, top 5 interest of followers are "sports_fandom", "religion", "parenting", "food" and "school".
+In the 1st and 2nd market segment, the top 5 interests are same, so we combine them into one segment as new 1st market segment.
+In the 2nd market segment, top 5 interest of followers are  "politics", "travel", "computers", "news" and "automotive".
+In the 3rd market segment, top 5 interest of followers are  "health_nutrition", "personal_fitness", "outdoors", "politics" and "news".
+In the 4th market segment, top 5 interest of followers are "beauty", "fashion", "cooking", "photo_sharing" and "shopping". 
+In the 5th market segment, top 5 interest of followers are "online_gaming", "sports_playing", "college_uni", "cooking" and "automotive". 
+In the 6th market segment, top 5 interest of followers are "automotive", "shopping", "photo_sharing", "news" and "current_events".
+In the 7th market segment, top 5 interest of followers are "news", "automotive", "tv_film", "art" and "beauty". 
+Finally, we extracted 7 market segments.
+### 4.2.4 Conclusion
+From the clustering and principal component analysis, we extracted 7 analysis from both of them. 
+The first market segment found by clustering is similar with the third segment found by PCA as they have same interests - Personal fitness, outdoors and health & nutrition. 
+The second market segment found by clustering is similar with the fourth segment found by PCA as they have same interests - Fashion, cooking, beauty, shopping and photo sharing. 
+The third market segment found by clustering is similar with the fifth segment found by PCA as they have same interests - Online gaming, college&university and sports playing. 
+The fourth market segment found by clustering is similar with the first segment found by PCA as they have same interests - Sports fandom, food, religion, parenting and school.
+The fifth market segment found by clustering is similar with the second segment found by PCA as they have same interests - Politics, news, computers, travel and automobiles. 
+The sixth market segment found by clustering is similar with the seventh segment found by PCA as they have similar interests - TV film and art. 
+The seventh market segment found by clustering is similar with the sixth segment found by PCA as they have similar interests - shopping and photo sharing.
+Finally, we labeled above seven market segments to show their unique characteristics.
+We named the first market segment as “Mr. fitness”. Those kinds of people focus on working out and keeping in a good shape.
+We named the second market segment as “Mrs. fashion”. Those kinds of people like keeping up with fashion and sharing their happy moments with friends.
+We named the third market segment as “typical college student”. College students consist with most parts of this group. They are fond of entertainment such as online games and sports during their rest time.
+We named the fourth market segment as “middle-age parents”. They care about the fostering of their children. Also, they have interests in sports games. 
+We named the fifth market segment as “business man”. They pay attention to daily news online. Also, they like travelling during vacation. 
+We named the sixth market segment as “Hippie”. They like visiting gallery and enjoying movies.
+We named the seventh market segment as “Typical online user with interests toward everything but mainly shopping and photo sharing”. This is the typical you and me. 
