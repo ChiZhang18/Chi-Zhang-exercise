@@ -7,11 +7,11 @@ Question 1: Predictive Model Building
 ---------------------------------
 
 In this excercise, I am going to build the best predictive model possible for price and to quantify the average change in rental income per square foot by using this model.
-Before the model was assembled I cleaned the data first. I  removed buildings with a leasing rate of 0 per cent and lowered the scale of the building size by 1,000 square feet in order to meet the computation limit. Moreover,   I deleted the data with occupancy rate equal to 0 percent as we stated in the first exercise because we believe these buildings are anomalous. Next, to assemble the predictive model for price, we used the stepwise selection method. Two models were produced with a slight tweak.
+Before the model was assembled I cleaned the data first. I  removed buildings with a leasing rate of 0 per cent and lowered the scale of the building size by 1,000 square feet in order to meet the computation limit. Moreover, I deleted the data with occupancy rate equal to 0 percent as we stated in the first exercise because I believe these buildings are anomalous. Next, to assemble the predictive model for price, I first applied the stepwise selection method. Two models were produced with a slight tweak.
 
-The first model regarded LEED and EnergyStar separately, and the second model combined them into a single category of "green certified." I  started with the null model in both models by regressing rent on one, and then adding new variables as shown in the forward selection method. Using this model as my baseline model, I ran stepwise selection process and the final model would be eventually obtained.
+The first model regarded LEED and EnergyStar separately, and the second model combined them into a single category of "green certified." I intended to start with the null model in both models by regressing rent on one, and then adding new variables as shown in the forward selection method. Using it as my baseline model, I ran stepwise selection process and the final model would be eventually obtained.
 
-The two models selected are shown below. We had 45 and 44 significant coefficients, including the interaction terms, respectively.
+The two models selected are shown below. I had 45 and 44 significant coefficients, including the interaction terms, respectively.
     ## Rent ~ cluster_rent + size + class_a + class_b + cd_total_07 + 
     ##     age + cluster + net + Electricity_Costs + hd_total07 + leasing_rate + 
     ##     LEED + amenities + cluster_rent:size + size:cluster + cluster_rent:cluster + 
@@ -101,7 +101,7 @@ Thus, I used the model at the segment 65 and hence chose 184 coefficients. The m
     ##     Precipitation:cluster_rent + Gas_Costs:Electricity_Costs + 
     ##     Gas_Costs:cluster_rent + Electricity_Costs:cluster_rent
 
-In the second model, from the path plot below we could see that minimum AIC occurs at segment 66.
+Similarly in the second model, from the path plot below we could see that minimum AIC occurs at segment 66.
 
 ![](Exercise_3_report_files/figure-markdown_github/pathplot2-1.png)
 
@@ -170,7 +170,35 @@ After model selection process, I need to use selected model to quantify the aver
 
 **Conclusion**: Holding all other significant features of the building fixed, green certified (LEED or EnergyStar) buildings are expected to be 2.29 dollars per square feet per calendar year more expensive in comparison to non-green buildings. However, interestingly when buildings have amenities available on site, the positive effect of the green certification on rental income is significantly neutralized, an expected decrease of 2.15 dollars per square feet per calendar year.
 
+In order to explain this situation, first let's focus on the model selected by stepwise method with combined green rate variable. It could be seen that holding all other significant features of the building fixed, green-certified buildings with amenities is 2.15 dollar per square feet per calendar year lower than green-certified ones without amenities. It shows that "green certification" effect is different for buildings with and without amenities. The intuition behind is that the green buildings with amenities are generally regarded as commercial buildings, so the buildings have to pay the energy fee as commercial rate, which is usually higher than residential rate. Thus, residents in the green buildings with amenities still need to pay more than those in the green buildings without amenities. Thus, the owners of green buildings with amenities will lower the rent fee in order to attract more residents.
 
-In order to explain this situation, I should first focus on the model selected by stepwise method with combined green rate variable, it could be seen that holding all other significant features of the building fixed, green-certified buildings with amenities is 2.15 dollar per square feet per calendar year lower than green-certified ones without amenities. It shows that "green certification" effect is different for buildings with and without amenities. The intuition behind is that the green buildings with amenities are generally regarded as commercial buildings, so the buildings have to pay the energy fee as commercial rate, which is usually higher than residential rate. Thus, residents in the green buildings with amenities still need to pay more than those in the green buildings without amenities. Thus, the owners of green buildings with amenities will lower the rent fee in order to attract more residents.
+Question 2: What causes what
+----------------------------
 
-Exercise 3.2
+1.Why can’t I just get data from a few different cities and run the regression of “Crime” on “Police” to understand how more cops in the streets affect crime? (“Crime” refers to some measure of crime rate and “Police” measures the number of cops in a city.)
+
+The reason I cannot just do the simple regression of “Crime” on “Police” is due to the existence of endogeneity and that might arise from simultaneity, which means that although Crime rate depends on police force, the demand of police force might also depend on the crime rate. Assumed that when a city put more police on the street the crime rate tends to drop, and more police is needed if the crime rate of a city is high. So we need system ofequation including two equations to address this issue. However, the data that we have on hand mixed these two effects so that we cannot tell what is the cause for the variation on the crime rate. Therefore,  we cannot simply do the regression of “Crime” on “Police”.
+
+2.How were the researchers from UPenn able to isolate this effect? Briefly describe their approach and discuss their result in the “Table 2” below, from the researchers' paper.
+
+The researchers took endogeneity issue into account. By doing so, they utilized dummy variable _whether the high alert was triggered_ as instrumental variable and a control variable _ridership_ so as to isolate the effect. Therefore, initially data on crime were collected, as well as data of days when there was a high alert for potential terrorist attacks.
+
+let me explain briefly the intuition behind what they have done. Because the mayor of DC will respond actively to these events by putting more cops on the street when there is a high alert of potential terrorist attacks, and that decision made by Mayor does not have the intention of reducing crime on the road. When the high alert was triggered, majority of people might stay at home. The likelihood of a crime would therefore decrease, resulting in fewer crimes not being committed by more cops at that time. In addition to it, researchers also chose riding as a control variable. If the number of ridership is as usual, that means the number of people do not decrease due to the high alert. Thus, researchers need to control the ridership. From table 1, we saw that days with a high alert have lower crimes, since the coefficient is -6.046, which is also significant at 5% level after including the control variable ridership.
+
+Therefore, holding the number of people going out in the days when there’s a high alert fixed (also holding the ridership fixed), the crime becomes lower in those days is due to more cops in the street.
+
+3.Why did they have to control for Metro ridership? What was that trying to capture?
+
+While the above method is very brilliant, some may still argue that the correlation between the alert and the crime rate is probably not zero. In high-alert days people may be too afraid to leave from home, and hence crime opportunities may be less, leading to lower crime.
+
+Regarding to it, researchers therefore include ridership into the regression and rerun it.  If the estimation of interest remains negative, then it’s more convincing to say that the regression captures the influence of police force on crime rate.
+
+Viewed from Table 2, the coefficient of interest was still negative holding the control variable fixed. Results rule out the possibility mentioned above to some extent. We can not for sure prove, however, that more cops are causing fewer crimes. Street criminals may have too much fear of terrorists and decide not to leave on a day of high alert. This would reduce crime, which is not linked to more police on the streets.
+
+4.Below I am showing you "Table 4" from the researchers' paper. Just focus on the first column of the table. Can you describe the model being estimated here? What is the conclusion?
+
+The model here uses a cluster regression of the impact of a high-alert on a given district in Washington DC to figure out what is the effect of a high-alert on crime allowing for the fact that different districts within DC would have pre-specified law enforcement levels that are not consistent throughout the whole city - namely the Capitol National Mall in comparison with other districts. The researchers concluded that the alert increased the police presence and reduced crime, but for certain districts you control, most of the decrease was observed within one district – the Capitol Mall. This makes sense since the high ratio of extra cops in the district is most likely to be deployed for security reasons as all terrorist targets, such as the United States Capitol, the White House, Federal Triangle and the US Supreme Court are all there. The impact is insignificant in other districts because the confidence interval lies on the coefficient of zero.
+
+Question 3: A Hospital Audit
+----------------------------
+
