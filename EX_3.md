@@ -12,6 +12,7 @@ Before the model was assembled I cleaned the data first. I  removed buildings 
 The first model regarded LEED and EnergyStar separately, and the second model combined them into a single category of "green certified." I intended to start with the null model in both models by regressing rent on one, and then adding new variables as shown in the forward selection method. Using it as my baseline model, I ran stepwise selection process and the final model would be eventually obtained.
 
 The two models selected are shown below. I had 45 and 44 significant coefficients, including the interaction terms, respectively.
+
     ## Rent ~ cluster_rent + size + class_a + class_b + cd_total_07 + 
     ##     age + cluster + net + Electricity_Costs + hd_total07 + leasing_rate + 
     ##     LEED + amenities + cluster_rent:size + size:cluster + cluster_rent:cluster + 
