@@ -428,14 +428,14 @@ Finally, I labeled above seven market segments to show their unique characterist
 
 I named the first market segment as **“Mr. fitness”**. Those kinds of people focus on working out and keeping in a good shape.
 
-We named the second market segment as **“Mrs. fashion”**. Those kinds of people like keeping up with fashion and sharing their happy moments with friends.
+I named the second market segment as **“Mrs. fashion”**. Those kinds of people like keeping up with fashion and sharing their happy moments with friends.
 
-We named the third market segment as **“typical college student”**. College students consist with most parts of this group. They are fond of entertainment such as online games and sports during their rest time.
+I named the third market segment as **“typical college student”**. College students consist with most parts of this group. They are fond of entertainment such as online games and sports during their rest time.
 
-We named the fourth market segment as **“middle-age parents”**. They care about the fostering of their children. Also, they have interests in sports games.
+I named the fourth market segment as **“middle-age parents”**. They care about the fostering of their children. Also, they have interests in sports games.
 
-We named the fifth market segment as **“business man”**. They pay attention to daily news online. Also, they like travelling during vacation.
+I named the fifth market segment as **“business man”**. They pay attention to daily news online. Also, they like travelling during vacation.
 
-We named the sixth market segment as **“Hippie”**. They like visiting gallery and enjoying movies.
+I named the sixth market segment as **“Hippie”**. They like visiting gallery and enjoying movies.
 
-We named the seventh market segment as **“Typical online user with interests toward everything but mainly shopping and photo sharing”**. This is the typical you and me.
+I named the seventh market segment as **“Typical online user with interests toward everything but mainly shopping and photo sharing”**. This is the typical you and me.
