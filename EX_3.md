@@ -42,7 +42,7 @@ I then tried to use the Lasso model to assemble the best predictive model possib
 
 In the first model, from the path plot below I could see that minimum AIC occurs at segment 65.
 
-![](Exercise_3_report_files/figure-markdown_github/pathplot1-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-1.png)
 
 Thus, I used the model at the segment 65 and hence chose 184 coefficients. The model specification is shown below.
 
@@ -103,7 +103,7 @@ Thus, I used the model at the segment 65 and hence chose 184 coefficients. The m
 
 Similarly in the second model, from the path plot below we could see that minimum AIC occurs at segment 66.
 
-![](Exercise_3_report_files/figure-markdown_github/pathplot2-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-2.png)
 
 Thus, we used the model at the segment 66 and hence chose 168 coefficients. The specific model is shown below.
 
@@ -208,13 +208,13 @@ First I intend to normalize the data. After demeaning and scaling with their sta
 
 Although there are 11 chemical properties, I choose to visualize the data through only 4 dimensions: total sulfur dioxide, density, pH, and volatile acidity. The following graph shows the distribution of the red wines and the white wine on these 4 dimensions. I randomly pick these 4 properties to give a first taste of the data. From the graph I can tell that the red wine and the white wine have different features, so it is highly possible for me to distinguish these two different type of wines.
 
-![](Exercise_4_report_files/figure-markdown_github/plot4.1.2-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-3.png)
 
 Since I have already have a basic impression of 2 categories in mind, I choose to first **do clustering with K=2**.
 
 First, by using K-means, I can divide the wines into 2 category. Visualizing through the total sulfur dioxide and the density, I can tell that K=means did an excellent work distinguishing red wines and white wines.
 
-![](Exercise_4_report_files/figure-markdown_github/plot4.1.3-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-4.png)
 
 More specifically, I can calculate the accuracy rate by looking at the following confusion matrix. The accuracy rate for K-means is (4,830+1,575)/6,497 = 98.6%, which is pretty high. **This means by looking at the chemical properties, the K-means can characterize the red wine and white wine almost perfectly.**
 
@@ -235,7 +235,7 @@ Second, I use **the PCA method**. The summary of the scores is listed below. The
     ## Proportion of Variance 0.04756 0.04559 0.03064 0.0207 0.00298
     ## Cumulative Proportion  0.90009 0.94568 0.97632 0.9970 1.00000
 
-![](Exercise_4_report_files/figure-markdown_github/table4.1.5-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-5.png)
 
 More specifically, I can calculate the accuracy rate by looking at the following confusion matrix. The accuracy rate for K-PCA is (4,818+1,575)/6,497 = 98.4%, which is slightly lower than the K-mean result. **In conclusion, to differ white wines and red wines, we can simply use the K-mean method and it will give me a pretty good result.**
 
@@ -249,15 +249,15 @@ More specifically, I can calculate the accuracy rate by looking at the following
 
 Before I do the clustering, the following barplot shows the distribution of the different qualities. There are only 7 different qualities of wines in the dataset. It seems that most of the wines have quality of 5 or 6, and only a few of them have very high or very low quality. Since normally the clustering method would divide the data into different categories quite equally, it might be very hard for K-means algorithm to successfully identify the quality of the wines.
 
-![](Exercise_4_report_files/figure-markdown_github/graph4.1.7-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-6.png)
 
 What’s more, by data visualization, it seems that the wines with different qualities have similar chemistry features, making it even more difficult to identify the quality of the wine.
 
-![](Exercise_4_report_files/figure-markdown_github/graph4.1.8-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-7.png)
 
 First, by using K-means, we can divide the wines into 7 category. The perfect density graph should be as follow.
 
-![](Exercise_4_report_files/figure-markdown_github/graph4.1.9-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-8.png)
 
 However, the density of different wine should be concentrating on different categories. The result, as is shown in the following density graph and the confusion matrix, is not so good. There is no obvious pattern that could be pointed out from the clustering. Hence the K-mean method fails at this challenge, just as we expected.
 
@@ -271,11 +271,11 @@ However, the density of different wine should be concentrating on different cate
     ##              6   7  24 648 640 122  22   0
     ##              7   6  63 470 346  43   2   0
 
-![](Exercise_4_report_files/figure-markdown_github/graph4.1.10-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-9.png)
 
 Second, I use the PCA method. Still I choose to use the first four principal components to do the clustering with K=7. The following is the graph of different wines qualities and different categories on the scale of the first two components. From the graph I can hardly tell any relations between the quality of the wine and the categories that I find.
 
-![](Exercise_4_report_files/figure-markdown_github/graph4.1.11-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-10.png)
 
 The similar story can be told by looking at the confusion matrix and the density graph. However, the PCA method is slightly better than the K-means, since the high quality wine tends to cluster into similar categories. Saying that, the overall result of the prediction is still a nightmare. The chemistry feature just might not be the reason for the different qualities of the wine.
 
@@ -289,7 +289,7 @@ The similar story can be told by looking at the confusion matrix and the density
     ##                 6   7  57 363 274  36   2   0
     ##                 7   2  22 136 540 428  93   4
 
-![](Exercise_4_report_files/figure-markdown_github/graph4.1.12-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-11.png)
 
 **In conclusion, I might not be able to tell the difference among the different quality wine by only looking at the chemical features of the wine.**
 
@@ -302,15 +302,15 @@ First I decided to eliminate as many bots as possible from the slip through. All
 
 In order to determine market segment by k-means clustering, I must first select the number of initial centroids, or in other words, the number of user types. 3 types of supporting analysis were used to help us determine the quantity: Elbow plot(SSE), CH index and Gap statistics.
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.1-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-12.png)
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.1.1-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-13.png)
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.1.2-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-14.png)
 
 As shown above, the results are subtle and therefore difficult to determine the best number for K. I eventually picked K=7 for two reasons, 1. I observed a weak signal of dipping in the Gap statistic graph and 2. I found about the equal number of interest groups with relatively strong correlated interests from our correlation analysis as shown below.
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.2-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-15.png)
 
 I created this heat map hoping to have a deeper analysis of each cluster. Even though we would never know the full picture of each cluster, I believed interests with high proximity, or high correlation, would most likely be fit into same cluster. The more common interests I find from each cluster, the better I can describe each market segment and therefore are able to help our client creating cluster based market strategies.
 
@@ -318,27 +318,27 @@ Some distinct market segments with highly correlated interests are listed below 
 
 #### 1. Personal fitness, outdoors, health & nutrition
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.3-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-16.png)
 
 #### 2. Fashion, cooking, beauty, shopping, photo sharing
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.4.1-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-17.png)
 
 #### 3. Online gaming, college&university, sports playing
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.5-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-18.png)
 
 #### 4. Sports fandom, food, family, religion, parenting, school
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.6.1-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-19.png)
 
 #### 5. Politics, news, computers, travel, automobiles
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.7.1-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-20.png)
 
 #### 6. TV film, art, music
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.8-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-21.png)
 
 #### 7. Everything, shopping, photo sharing
 
@@ -358,9 +358,9 @@ I first got the loadings matrix and scores matrix from principal components meth
 
 In the above table, I can see that the first eight principal components can explain most of the variability. The first principal component explains 13% of the variability; the second principal component explains 8% of the variability; the third principal component explains 8% of the variability;the fourth principal component explains 7% of the variability; the fifth principal component explains 7% of the variability; the sixth principal component explains 5% of the variability; the seventh principal component explains 4% of the variability; the eighth principal component explains 4% of the variability. Together, the first eight principal components explain 56% of the variability.
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.9-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-22.png)
 
-![](Exercise_4_report_files/figure-markdown_github/graph_4.2.10-1.png)
+![](https://github.com/ChiZhang18/ECO395M-exercise/blob/master/Unnamed%20Plots/e3-23.png)
 
 In the PVE Plot, I can see that between eighth and ninth components, there’s a significant gap in the Scree Plot. Also, from the Cumulative PVE Plot, we can find that first eight principal components can explain more than 50% of the total variability. Thus, I choose 8 principal components to divide the market of NutrientH20 into 8 segments. The characteristics of these 8 market segments are actually latent factor inferred from 33 interests categories.
 
