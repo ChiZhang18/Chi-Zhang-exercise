@@ -1,1 +1,1 @@
-# ECO395M-exercise
+# Data Mining-exercise
