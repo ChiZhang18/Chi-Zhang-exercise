@@ -91,40 +91,10 @@ Lastly, I used k-fold cross validation in order to compare all 6 models above. I
 
 The second best model was the fifth model, which came from the random forest method. The random forest model has one advantage over the linear regression: it will only give us positive predictions. As a result, I used both the second model and the fifth model to do the predictions.
 
+<p align="center">
+  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N+1.jpg">
+</p>
 
-|                               |  coefficients.Estimate|  coefficients.Std..Error|  coefficients.t.value|  coefficients.Pr...t..|
-|-------------------------------|----------------------:|------------------------:|---------------------:|----------------------:|
-| (Intercept)                   |           1.477139e+07|             1.485051e+07|             0.9946722|              0.3200784|
-| duration\_ms\_x               |          -2.605650e+01|             2.103190e+01|            -1.2389035|              0.2156020|
-| acousticness                  |          -2.563100e+06|             1.417628e+07|            -0.1808020|              0.8565508|
-| danceability                  |           2.093635e+07|             8.411312e+06|             2.4890702|              0.0129305|
-| energy                        |           3.889140e+06|             1.442581e+07|             0.2695959|              0.7875134|
-| liveness                      |           1.365523e+08|             3.889650e+07|             3.5106571|              0.0004621|
-| loudness                      |           1.041643e+06|             6.078866e+05|             1.7135477|              0.0868472|
-| mode                          |           3.864808e+06|             3.200567e+06|             1.2075386|              0.2274416|
-| speechiness                   |           2.145372e+07|             1.910959e+07|             1.1226677|              0.2617833|
-| valence                       |          -1.790494e+07|             8.049094e+06|            -2.2244667|              0.0262860|
-| key6                          |           1.312836e+06|             1.077294e+07|             0.1218643|              0.9030251|
-| key8                          |          -2.688801e+07|             2.472275e+07|            -1.0875817|              0.2769788|
-| key10                         |          -8.169889e+06|             4.400088e+06|            -1.8567559|              0.0635690|
-| explicitTRUE                  |          -7.402228e+07|             2.606267e+07|            -2.8401651|              0.0045784|
-| relseaseDuration              |           9.841779e+01|             3.603640e+02|             0.2731066|              0.7848141|
-| explicitTRUE:relseaseDuration |           9.531865e+03|             3.351770e+03|             2.8438305|              0.0045264|
-| valence:explicitTRUE          |           2.267844e+07|             9.489738e+06|             2.3897859|              0.0169981|
-| duration\_ms\_x:key8          |           1.736374e+02|             7.610545e+01|             2.2815364|              0.0226757|
-| energy:liveness               |          -1.775605e+08|             5.172173e+07|            -3.4329967|              0.0006155|
-| acousticness:liveness         |          -1.204973e+08|             3.865382e+07|            -3.1173467|              0.0018644|
-| mode:speechiness              |          -2.604542e+07|             1.506519e+07|            -1.7288486|              0.0840705|
-| mode:key10                    |           1.757108e+07|             6.870561e+06|             2.5574439|              0.0106557|
-| speechiness:explicitTRUE      |          -3.399285e+07|             2.045238e+07|            -1.6620487|              0.0967410|
-| liveness:key6                 |           5.895453e+07|             3.118061e+07|             1.8907436|              0.0588779|
-| acousticness:energy           |           4.280839e+07|             2.337989e+07|             1.8309917|              0.0673276|
-| valence:key6                  |          -2.895847e+07|             1.907235e+07|            -1.5183480|              0.1291667|
-| mode:key6                     |           1.542865e+07|             8.176206e+06|             1.8870187|              0.0593776|
-| danceability:key8             |          -4.036365e+07|             2.535969e+07|            -1.5916460|              0.1117043|
-| key8:explicitTRUE             |           2.513174e+07|             1.057592e+07|             2.3763173|              0.0176287|
-| valence:key8                  |           3.149553e+07|             1.701434e+07|             1.8511171|              0.0643765|
-| speechiness:key8              |          -3.889988e+07|             2.753208e+07|            -1.4128928|              0.1579235|
 >Table 3: Coefficients of The Second Model
 
 From the second model, I could clearly see that *danceability, energy, liveness, loudness, mode, speechiness* and *key 6* have positive effects on streams, which means the more these factors used in the song, the more people the song will be played. Also, I intend to pay attention to *release duration* of the track . The longer the release duration is, the song will be played by less people, which means users prefer to play latest songs on.
