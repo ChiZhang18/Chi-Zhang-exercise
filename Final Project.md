@@ -92,7 +92,7 @@ Lastly, I used k-fold cross validation in order to compare all 6 models above. I
 The second best model was the fifth model, which came from the random forest method. The random forest model has one advantage over the linear regression: it will only give us positive predictions. As a result, I used both the second model and the fifth model to do the predictions.
 
 <p align="center">
-  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N+1.jpg">
+  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N+1.png">
 </p>
 
 >Table 3: Coefficients of The Second Model
