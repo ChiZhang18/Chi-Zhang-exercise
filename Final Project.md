@@ -82,7 +82,7 @@ Afterwards, I used the decision tree models to assemble the best predictive mode
 
 
 <p align="center">
-  <img width="300" height="250" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-RMSE.png">
+  <img width="300" height="220" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-RMSE2.png">
 </p>
 
 >Table 2: RMSE of Different Models
