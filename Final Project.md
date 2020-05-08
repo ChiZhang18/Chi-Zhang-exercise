@@ -37,7 +37,7 @@ By doing so, the two selected models are shown below. Noted that I had 5 and 31 
 
     ## [1] "model 2: "
 
-    ## Streams ~ duration_ms_x + acousticness + danceability + energy + 
+    ## Streams ~ duration + acousticness + danceability + energy + 
     ##     liveness + loudness + mode + speechiness + valence + key6 + 
     ##     key8 + key10 + explicitTRUE + relseaseDuration + explicitTRUE:relseaseDuration + 
     ##     valence:explicitTRUE + duration_ms_x:key8 + energy:liveness + 
