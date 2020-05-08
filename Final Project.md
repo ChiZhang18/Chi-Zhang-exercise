@@ -240,7 +240,7 @@ I also calculated the total streams of different song clusters by time. The foll
 
 
 <p align="center">
-  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N.png">
+  <img width="550" height="350" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N.png">
 </p>
 
 >Figure 8: Trend in the Total Streams
