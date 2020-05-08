@@ -49,7 +49,10 @@ I then used the Lasso model to assemble the best predictive model possible for s
 
 For the third model, viewed from the path plot below I could find that minimum AIC occurs at segment 8, where there are 6 coefficients in this model.
 
-![](final_project_files/figure-markdown_github/pathplot3-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-4.png">
+</p>
+
 > Figure 1: Pathplot of Lasso (The Third Model)
 
 Thus, I used the model at the segment 8 and chose 6 coefficients. The specific model is shown below.
@@ -61,7 +64,10 @@ Thus, I used the model at the segment 8 and chose 6 coefficients. The specific m
 
 For the forth model, viewed from the path plot below I could see that minimum AIC occurs at segment 5, where there are 8 coefficients in the model.
 
-![](final_project_files/figure-markdown_github/pathplot4-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-5.png">
+</p>
+
 >Figure 2: Pathplot of Lasso (The Forth Model)
 
 Thus, I used the model at the segment 5 and chose 8 coefficients. The specific model is shown below.
@@ -124,7 +130,10 @@ The second best model was the fifth model, which came from the random forest met
 From the second model, I could clearly see that *danceability, energy, liveness, loudness, mode, speechiness* and *key 6* have positive effects on streams, which means the more these factors used in the song, the more people the song will be played. Also, I intend to pay attention to *release duration* of the track . The longer the release duration is, the song will be played by less people, which means users prefer to play latest songs on.
 
 
-![](final_project_files/figure-markdown_github/pdp-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-6.png">
+</p>
+
 >Figure 3: Partial Dependence Plot (The Fifth Model)
 
 Last but not the least, I plot the partial dependence for each variable contained in the fifth model, and the results seem similar to those derived from the second model, which guarantee the robustness of results. In conclusion, both selected linear model(the second model) and the decision tree model(the fifth model) provided me with similar results.  
@@ -154,15 +163,24 @@ Table 4 reports that the first 20 principle components explain more than 90% of 
 K-means++ clustering was used to determine the market segments. 3 types of supporting analysis were used to help me determine the number of K (centroids): Elbow plot(SSE), CH index and Gap statistics.
 
 
-![](final_project_files/figure-markdown_github/K-grid-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-7.png">
+</p>
+
 >Figure 4: SSE Grid vs K
 
 
-![](final_project_files/figure-markdown_github/CH-grid-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-8.png">
+</p>
+
 >Figure 5: CH Grid vs K
 
 
-![](final_project_files/figure-markdown_github/Gap-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-9.png">
+</p>
+
 >Figure 6: Gap vs K 
 
 As shown above, both Elbow plot and CH index returned K=16 and Gap statistics returned K=4. Clustering 16 segments would not show the distinct differences among them as I now only have 20 principle components to allocate. So I selected K=4 as my anchor and explored the nearby Ks to see which one provides me with the best explanation for each cluster. For **best explanation**, I considered the following 2 categories.
@@ -178,11 +196,18 @@ As the result, I eventually picked K = 5.
 After 5 clusters were determined, first I reversed the principle components into the original features to determine cluster characteristics. Then I showed some of the cluster identifiable distributions and the summary of each cluster below.
 
 
-![](final_project_files/figure-markdown_github/PC1-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-10.png">
+</p>
 
-![](final_project_files/figure-markdown_github/PC2-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-11.png">
+</p>
 
-![](final_project_files/figure-markdown_github/PC3-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-12.png">
+</p>
+
 >Figure 7: Cluster Identifiable Distributions
 
 -   **Cluster 1**: High in energy, high in loudness, high danceability, low speechiness, considerate amount of G key, low acousticness
@@ -214,7 +239,10 @@ Since I have the full list of song names and artist names available in each clus
 I also calculated the total streams of different song clusters by time. The following graph demonstrates the trend in the total streams of different categories.
 
 
-![](final_project_files/figure-markdown_github/trend-1.png)
+<p align="center">
+  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N.png">
+</p>
+
 >Figure 8: Trend in the Total Streams
 
 From this graph it is demonstrated that the stream of five types of songs does not change too much in a year. Cluster 4 music has more streams overall, due to the fact that there are more songs in this categories. There is a peak in the end of April in 2019 for cluster 4, and then the streams goes back to normal. From this graph I can also see that at the end of the year cluster 4 music is not as popular as in the middle of the year, but type 5 music becomes more and more popular, especially in June and the end of the year. The popularity of cluster 1, cluster 2 and cluster 3 music doesn't vary too much throughout the whole year. 
