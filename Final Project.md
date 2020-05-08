@@ -75,14 +75,9 @@ Thus, I used the model at the segment 5 and chose 8 coefficients. The specific m
 Afterwards, I used the decision tree models to assemble the best predictive model possible for streams. I tried the random forest model and the boosting model on the dataset, which gave me 2 non-linear models: the fifth model and the sixth model.
 
 
-| Model   | CV               |
-|----:----|--------:---------|
-| Model 1 | 34802186.114901  |
-| Model 2 | 34571981.9831834 |
-| Model 3 | 34786251.1980486 |
-| Model 4 | 34790460.5500625 |
-| Model 5 | 34406689.4147624 |
-| Model 6 | 35101041.336879  |
+<p align="center">
+  <img width="500" height="500" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
+</p>
 
 >Table 2: RMSE of Different Models
 
@@ -146,36 +141,14 @@ In this section I would like to segment the 1,502 songs into groups with similar
 In this part, I would like to use PCA to balance between the amount of computation load and explanatory variability, while eliminating as much noise as possible from the data. After demeaning and scaling of the data with standard deviation, I calculated the the loading matrix/scores matrix in order to derive the proportion of variance explained (PVE) and decide the number of principal components needed.
 
 
-| ID   | Standard deviation  | Proportion of Variance | Cumulative Proportion |
-|:-----|:--------------------|:-----------------------|:----------------------|
-| PC1  | 2.80212353537273    | 0.112084941414909      | 0.1121                |
-| PC2  | 1.77344288190906    | 0.0709377152763623     | 0.183                 |
-| PC3  | 1.46727876624167    | 0.058691150649667      | 0.2417                |
-| PC4  | 1.44279628131763    | 0.0577118512527051     | 0.2994                |
-| PC5  | 1.2024934848242     | 0.0480997393929679     | 0.3475                |
-| PC6  | 1.18118422033003    | 0.0472473688132011     | 0.3948                |
-| PC7  | 1.16471426274806    | 0.0465885705099224     | 0.4414                |
-| PC8  | 1.11901808461181    | 0.0447607233844724     | 0.4861                |
-| PC9  | 1.10874235654547    | 0.0443496942618188     | 0.5305                |
-| PC10 | 1.08797663277924    | 0.0435190653111695     | 0.574                 |
-| PC11 | 1.08178043639889    | 0.0432712174559556     | 0.6173                |
-| PC12 | 1.06412510961753    | 0.0425650043847012     | 0.6598                |
-| PC13 | 1.05315275540945    | 0.0421261102163779     | 0.702                 |
-| PC14 | 1.03932598862547    | 0.0415730395450188     | 0.7435                |
-| PC15 | 1.00612785222318    | 0.0402451140889271     | 0.7838                |
-| PC16 | 0.947189585246249   | 0.03788758340985       | 0.8217                |
-| PC17 | 0.892958210859255   | 0.0357183284343702     | 0.8574                |
-| PC18 | 0.821043647001771   | 0.0328417458800708     | 0.8902                |
-| PC19 | 0.756342698063931   | 0.0302537079225572     | 0.9205                |
-| PC20 | 0.647404260335455   | 0.0258961704134182     | 0.9464                |
-| PC21 | 0.604914885182242   | 0.0241965954072897     | 0.9706                |
-| PC22 | 0.419178980270296   | 0.0167671592108118     | 0.9873                |
-| PC23 | 0.209254918185628   | 0.00837019672742513    | 0.9957                |
-| PC24 | 0.100442731001129   | 0.00401770924004517    | 0.9997                |
-| PC25 | 0.00698743489964209 | 0.000279497395985684   | 1                     |
+<p align="center">
+  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-3.jpg">
+</p>
 >Table 4: PCA Components
 
-Table 4 reports that the first 20 principle components explain more than 90% of the variability. and hence I believe that these 20 principle components would keep the computation load low and eliminate some of the noises, while keeping the majority of the variability. Clustering would further group the songs based on these 20 principle components.
+Table 4 reports that the first 20<p align="center">
+  <img width="500" height="500" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
+</p> principle components explain more than 90% of the variability. and hence I believe that these 20 principle components would keep the computation load low and eliminate some of the noises, while keeping the majority of the variability. Clustering would further group the songs based on these 20 principle components.
 
 ### Part 2: Clustering
 
