@@ -76,7 +76,7 @@ Afterwards, I used the decision tree models to assemble the best predictive mode
 
 
 <p align="center">
-  <img width="300" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
+  <img width="300" height="300" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
 </p>
 
 >Table 2: RMSE of Different Models
@@ -142,7 +142,7 @@ In this part, I would like to use PCA to balance between the amount of computati
 
 
 <p align="center">
-  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-3.jpg">
+  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-3.png">
 </p>
 >Table 4: PCA Components
 
