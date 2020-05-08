@@ -204,7 +204,7 @@ Since I have the full list of song names and artist names available in each clus
 
 -   **Cluster 5**: Many indie and pop songs with long vowel sounds, typical examples would be When We Were Young by Hollow Coves, Hay-on-Wye by Matthew Frederick and I Keep on Telling Myself by Dve Thomas Junior.
 
-#### Trend in popularity
+#### Trend in Popularity
 
 I also calculated the total streams of different song clusters by time. The following graph demonstrates the trend in the total streams of different categories.
 
