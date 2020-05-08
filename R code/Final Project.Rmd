@@ -110,13 +110,10 @@ The Pandora Top Spins Chart is a record chart ranking the 100 tracks that have b
 
 <b>Table1: Variables Description</b>
 
-<p align="center">
-  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg">
-</p>
+![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg)
 
-<p align="center">
-  <img width="705" height="800" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description1.jpg">
-</p>
+![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description1.jpg)
+
 
 ## Predictive Model Building
 
