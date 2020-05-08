@@ -65,7 +65,7 @@ Thus, I used the model at the segment 8 and chose 6 coefficients. The specific m
 For the forth model, viewed from the path plot below I could see that minimum AIC occurs at segment 5, where there are 8 coefficients in the model.
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-5.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-5.png">
 </p>
 
 >Figure 2: Pathplot of Lasso (The Forth Model)
@@ -131,7 +131,7 @@ From the second model, I could clearly see that *danceability, energy, liveness,
 
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-6.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-6.png">
 </p>
 
 >Figure 3: Partial Dependence Plot (The Fifth Model)
@@ -164,21 +164,21 @@ K-means++ clustering was used to determine the market segments. 3 types of suppo
 
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-7.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-7.png">
 </p>
 
 >Figure 4: SSE Grid vs K
 
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-8.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-8.png">
 </p>
 
 >Figure 5: CH Grid vs K
 
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-9.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-9.png">
 </p>
 
 >Figure 6: Gap vs K 
@@ -197,15 +197,15 @@ After 5 clusters were determined, first I reversed the principle components into
 
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-10.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-10.png">
 </p>
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-11.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-11.png">
 </p>
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-12.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-12.png">
 </p>
 
 >Figure 7: Cluster Identifiable Distributions
@@ -240,7 +240,7 @@ I also calculated the total streams of different song clusters by time. The foll
 
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-N.png">
 </p>
 
 >Figure 8: Trend in the Total Streams
