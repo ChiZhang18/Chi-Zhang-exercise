@@ -15,7 +15,7 @@ The Pandora Top Spins Chart is a record chart ranking the 100 tracks that have b
 Given Pandora's public API, I had access to the data on the song features, artists and album information. By using web crawler, I could  extract those target data from the web page and store them in *.csv* format. In the end, the formal dateset ultimately contains the following variables(attached with corresonding descriptions):
 
 <p align="center">
-  <img width="500" height="1000" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg">
+  <img width="700" height="1000" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg">
 </p>
 ![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg)
 ![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description1.jpg)
