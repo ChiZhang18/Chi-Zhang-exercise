@@ -14,6 +14,9 @@ Data Sources
 The Pandora Top Spins Chart is a record chart ranking the 100 tracks that have been streamed the most over the course of the past week. It is published weekly by Pandora. From <https://www.nextbigsound.com/charts/top-spins>, we downloaded the weekly data of the top 100 songs in the US. The data in year 2019 gives us access to 1,502 different songs.
 Given Pandora's public API, I had access to the data on the song features, artists and album information. By using web crawler, I could  extract those target data from the web page and store them in *.csv* format. In the end, the formal dateset ultimately contains the following variables(attached with corresonding descriptions):
 
+<p align="center">
+  <img width="460" height="300" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg">
+</p>
 ![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg)
 ![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description1.jpg)
 >Table 1: Description of Variables used in this Project  
