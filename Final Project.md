@@ -89,7 +89,8 @@ Using the data created by Billboard 200,
 </tr>
 </tbody>
 </table>
->Table1: Description of Variables used in this Project  
+
+>Table 1: Description of Variables used in this Project  
 
 Predictive Model Building
 --------------------------
@@ -129,7 +130,7 @@ Thus, I used the model at the segment 8 and chose 6 coefficients. The specific m
 For the forth model, viewed from the path plot below I could see that minimum AIC occurs at segment 5, where there are 8 coefficients in the model.
 
 ![](final_project_files/figure-markdown_github/pathplot4-1.png)
->Figure2: Pathplot of Lasso (The Forth Model)
+>Figure 2: Pathplot of Lasso (The Forth Model)
 
 Thus, I used the model at the segment 5 and chose 8 coefficients. The specific model is shown below.
 
