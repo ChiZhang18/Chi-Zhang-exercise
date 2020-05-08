@@ -17,8 +17,9 @@ Given Pandora's public API, I had access to the data on the song features, artis
 <p align="center">
   <img width="700" height="1000" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg">
 </p>
-![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description.jpg)
-![](https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description1.jpg)
+<p align="center">
+  <img width="700" height="900" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-description1.jpg">
+</p>
 >Table 1: Description of Variables used in this Project  
 
 Predictive Model Building
