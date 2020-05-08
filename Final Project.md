@@ -50,7 +50,7 @@ I then used the Lasso model to assemble the best predictive model possible for s
 For the third model, viewed from the path plot below I could find that minimum AIC occurs at segment 8, where there are 6 coefficients in this model.
 
 <p align="center">
-  <img width="400" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-4.png">
+  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-4.png">
 </p>
 
 > Figure 1: Pathplot of Lasso (The Third Model)
