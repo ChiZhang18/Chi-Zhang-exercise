@@ -199,15 +199,15 @@ After 5 clusters were determined, first I reversed the principle components into
 
 Since I have the full list of song names and artist names available in each cluster, I could actually listen to the songs and categorize them manually by the music genre standard as in pop, rock, rap, etc. If my cluster characteristics determined by K-means++ show close resemblance of the music genre, then the recommendation system could be effective, at least to the extent of traditional music listeners with distinct preference over specific genre.
 
--   **Cluster 1**: Many songs with electronically altered/amplified sounds, very rhythmic, but genre varying from pop to rap to country, etc. Typical examples would be I Get The Bag by Gucci Mane, Echame La Culpa by Luis Fonsi, IDGAF by Dua Lipa.
+-   **Cluster 1**: Many songs with electronically altered/amplified sounds, very rhythmic, but genre varying from pop to rap to country, etc. Typical examples would be Suge (Yea Yea) by DaBaby, Caro by Bad Bunny and Spy Kid by Chief Keef & Zaytoven.
 
--   **Cluster 2**: Indeed many songs with 5/4 time signature, high energy and rhythmic, but clearly sets apart different vibe compared cluster 1, perhaps due to the different time signature. Typical examples would be Top Off by DJ Khaled, You Can Cry by Marshmello, and Creep on me by GASHI.
+-   **Cluster 2**: Indeed many songs with 5/4 time signature, high energy and rhythmic, but clearly sets apart different vibe compared cluster 1, perhaps due to the different time signature. Typical examples would be Higher by DJ Khaled, Safety, and That's Mine by GASHI.
 
--   **Cluster 3**: Genre varies a lot in this cluster, as shown in the very different artists such as Drake, Kendrick Lamar, Taylor Swift, XXXTENTACION and Queen. We did realize that out of the many rap songs in this cluster, most of them were the slower ones. For example, Wow by Post Malone and Forever Ever by Trippie Redd.
+-   **Cluster 3**: Genre varies a lot in this cluster, as shown in the very different artists such as Drake, Kendrick Lamar, Taylor Swift, XXXTENTACION and Queen. I did realize that out of the many rap songs in this cluster, most of them were the slower ones. For example, Me! by Taylor Swift and Who Needs Love by Trippie Redd.
 
--   **Cluster 4**: Songs in B flat key stands out, such as Betrayed by Lil Xan and Midnight Summer Jam by Justin Timberlake, which make this cluster a different vibe than others.
+-   **Cluster 4**: Songs in B flat key stands out, such as Midnight In Prague by Lil Xan and Say Something by Justin Timberlake, which make this cluster a different vibe than others.
 
--   **Cluster 5**: Many indie and pop songs with long vowel sounds, typical examples would be A Million Dreams by Ziv Zaifman, Perfect by Ed Sheeran and The Night We met by Lord Huron.
+-   **Cluster 5**: Many indie and pop songs with long vowel sounds, typical examples would be When We Were Young by Hollow Coves, Hay-on-Wye by Matthew Frederick and I Keep on Telling Myself by Dve Thomas Junior.
 
 ### Trend in popularity
 
