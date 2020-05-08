@@ -197,15 +197,15 @@ After 5 clusters were determined, first I reversed the principle components into
 
 
 <p align="center">
-  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-10.png">
+  <img width="550" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-10.png">
 </p>
 
 <p align="center">
-  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-11.png">
+  <img width="550" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-11.png">
 </p>
 
 <p align="center">
-  <img width="500" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-12.png">
+  <img width="550" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-12.png">
 </p>
 
 >Figure 7: Cluster Identifiable Distributions
