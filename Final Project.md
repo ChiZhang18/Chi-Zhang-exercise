@@ -190,7 +190,7 @@ After 5 clusters were determined, first I reversed the principle components into
 
 -   **Cluster 5**: Many 3 quarter time signature songs, low speechiness
 
-### Category 2: Song market segments breakdown by genre
+#### Category 2: Song market segments breakdown by genre
 
 Since I have the full list of song names and artist names available in each cluster, I could actually listen to the songs and categorize them manually by the music genre standard as in pop, rock, rap, etc. If my cluster characteristics determined by K-means++ show close resemblance of the music genre, then the recommendation system could be effective, at least to the extent of traditional music listeners with distinct preference over specific genre.
 
@@ -204,7 +204,7 @@ Since I have the full list of song names and artist names available in each clus
 
 -   **Cluster 5**: Many indie and pop songs with long vowel sounds, typical examples would be When We Were Young by Hollow Coves, Hay-on-Wye by Matthew Frederick and I Keep on Telling Myself by Dve Thomas Junior.
 
-### Trend in popularity
+#### Trend in popularity
 
 I also calculated the total streams of different song clusters by time. The following graph demonstrates the trend in the total streams of different categories.
 
@@ -220,6 +220,6 @@ From this graph it is demonstrated that the stream of five types of songs does n
 Conclusion
 ----------
 
-In each age, the popularity of songs reflects people's preference over different music, which may also differ from each era. To predict the success of a song, taking the contemporaneous music preference into account is of significance. In 2019, modern people are insane about music with elements of danceability, energy, liveness and so on. It seems that they are more likely to pursue the latest music. As a result, in order to predict the song's popularity trend in 2020, the first thing we need to do is to gather the information of public music preference next year.
+In each age, the popularity of songs reflects people's preference over different music, which may also differ from each era. To predict the success of a song, taking the contemporaneous music preference into account is of significance. In streaming era, users are insane about music with elements of danceability, energy, liveness and so on. It seems that they are more likely to pursue the latest music. As a result, in order to predict the song's popularity trend in 2020, the first thing we need to do is to gather the information of users' music preference next year.
 
-Traditional music listeners explore songs by specific genre and artists. This confirmation bias, typically nurtured through years of artificial genre segmentation by media and artist reputation, could limit listeners from the songs that they really want to be exposed to. The question of "why are we attracted to certain songs" is a philosophical discussion that is beyond the scope of our project here, but given the data from Apple Music and our clustering method, we perhaps show that key, time signature and speed of the songs are some of the contributing factors to our inner biological working of what to like and dislike. Then, our basic recommendation system, most likely already used by streaming music service providers like Apple Music, Spotify, Pandora, etc., could recommend songs not by mere genre and artist names, but also by specific keys and time signatures each listener is attracted to, subconsciously.
+Traditional music listeners explore songs by specific genre and artists. This confirmation bias, typically nurtured through years of artificial genre segmentation by media and artist reputation, could limit listeners from the songs that they really want to be exposed to. The question of "why are we attracted to certain songs" is a philosophical discussion that is beyond the scope of our project here, but given the data from Pandora and the clustering method, I perhaps to show that *key, time signature* and *speed of the songs* are some of the contributing factors to the inner biological working of what to like and dislike. Then, my basic recommendation system, most likely already used by streaming music service providers like Pandora, Spotify, Apple Music, etc., could recommend songs not by mere genre and artist names, but also by specific keys and time signatures each listener is attracted to, subconsciously.
