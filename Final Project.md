@@ -89,7 +89,7 @@ Using the data created by Billboard 200,
 </tr>
 </tbody>
 </table>
-> Table1: Description of Variables used in this Project  
+>Table1: Description of Variables used in this Project  
 
 Predictive Model Building
 --------------------------
@@ -117,7 +117,7 @@ I then used the Lasso model to assemble the best predictive model possible for s
 For the third model, viewed from the path plot below I could find that minimum AIC occurs at segment 8, where there are 6 coefficients in this model.
 
 ![](final_project_files/figure-markdown_github/pathplot3-1.png)
-> Figure1: Pathplot of Lasso (The Third Model)
+> Figure 1: Pathplot of Lasso (The Third Model)
 
 Thus, I used the model at the segment 8 and chose 6 coefficients. The specific model is shown below.
 
@@ -129,7 +129,7 @@ Thus, I used the model at the segment 8 and chose 6 coefficients. The specific m
 For the forth model, viewed from the path plot below I could see that minimum AIC occurs at segment 5, where there are 8 coefficients in the model.
 
 ![](final_project_files/figure-markdown_github/pathplot4-1.png)
-> Figure2: Pathplot of Lasso (The Forth Model)
+>Figure2: Pathplot of Lasso (The Forth Model)
 
 Thus, I used the model at the segment 5 and chose 8 coefficients. The specific model is shown below.
 
@@ -143,14 +143,15 @@ Afterwards, I used the decision tree models to assemble the best predictive mode
 
 
 | Model   | CV               |
-|----:----|---------:--------|
+|----:----|--------:---------|
 | Model 1 | 34802186.114901  |
 | Model 2 | 34571981.9831834 |
 | Model 3 | 34786251.1980486 |
 | Model 4 | 34790460.5500625 |
 | Model 5 | 34406689.4147624 |
 | Model 6 | 35101041.336879  |
-> Table2: RMSE of different models
+
+>Table 2: RMSE of Different Models
 
 Lastly, I used k-fold cross validation in order to compare all 6 models above. I found that the CVs of the second model has the minimum CV, and therefore it is the best predictive model possible for streams. The advantage of a linear model is that a linear model with interactions is much easier to interpret than the non-linear models.
 
@@ -190,13 +191,13 @@ The second best model was the fifth model, which came from the random forest met
 | key8:explicitTRUE             |           2.513174e+07|             1.057592e+07|             2.3763173|              0.0176287|
 | valence:key8                  |           3.149553e+07|             1.701434e+07|             1.8511171|              0.0643765|
 | speechiness:key8              |          -3.889988e+07|             2.753208e+07|            -1.4128928|              0.1579235|
-> Table3: coefficients of the second model
+>Table 3: Coefficients of The Second Model
 
 From the second model, I could clearly see that *danceability, energy, liveness, loudness, mode, speechiness* and *key 6* have positive effects on streams, which means the more these factors used in the song, the more people the song will be played. Also, I intend to pay attention to *release duration* of the track . The longer the release duration is, the song will be played by less people, which means users prefer to play latest songs on.
 
 
 ![](final_project_files/figure-markdown_github/pdp-1.png)
-> Figure3: partial dependence plot (the fifth Model)
+>Figure 3: Partial Dependence Plot (The Fifth Model)
 
 Last but not the least, I plot the partial dependence for each variable contained in the fifth model, and the results seem similar to those derived from the second model, which guarantee the robustness of results. In conclusion, both selected linear model(the second model) and the decision tree model(the fifth model) provided me with similar results.  
 
@@ -239,7 +240,7 @@ In this part, I would like to use PCA to balance between the amount of computati
 | PC23 | 0.209254918185628   | 0.00837019672742513    | 0.9957                |
 | PC24 | 0.100442731001129   | 0.00401770924004517    | 0.9997                |
 | PC25 | 0.00698743489964209 | 0.000279497395985684   | 1                     |
-> Table4: PCA components
+>Table 4: PCA Components
 
 Table 4 reports that the first 20 principle components explain more than 90% of the variability. and hence I believe that these 20 principle components would keep the computation load low and eliminate some of the noises, while keeping the majority of the variability. Clustering would further group the songs based on these 20 principle components.
 
@@ -249,15 +250,15 @@ K-means++ clustering was used to determine the market segments. 3 types of suppo
 
 
 ![](final_project_files/figure-markdown_github/K-grid-1.png)
-> Figure4: SSE Grid vs K
+>Figure 4: SSE Grid vs K
 
 
 ![](final_project_files/figure-markdown_github/CH-grid-1.png)
-> Figure5: CH Grid vs K
+>Figure 5: CH Grid vs K
 
 
 ![](final_project_files/figure-markdown_github/Gap-1.png)
-> Figure6: Gap vs K 
+>Figure 6: Gap vs K 
 
 As shown above, both Elbow plot and CH index returned K=16 and Gap statistics returned K=4. Clustering 16 segments would not show the distinct differences among them as I now only have 20 principle components to allocate. So I selected K=4 as my anchor and explored the nearby Ks to see which one provides me with the best explanation for each cluster. For **best explanation**, I considered the following 2 categories.
 
@@ -277,7 +278,7 @@ After 5 clusters were determined, first I reversed the principle components into
 ![](final_project_files/figure-markdown_github/PC2-1.png)
 
 ![](final_project_files/figure-markdown_github/PC3-1.png)
-> Figure7: cluster identifiable distributions
+>Figure 7: Cluster Identifiable Distributions
 
 -   **Cluster 1**: High in energy, high in loudness, high danceability, low speechiness, considerate amount of G key, low acousticness
 
@@ -309,7 +310,7 @@ I also calculated the total streams of different song clusters by time. The foll
 
 
 ![](final_project_files/figure-markdown_github/trend-1.png)
-> Figure8: trend in the total streams
+>Figure 8: Trend in the Total Streams
 
 From this graph it is demonstrated that the stream of five types of songs does not change too much in a year. Cluster 4 music has more streams overall, due to the fact that there are more songs in this categories. There is a peak in the end of April in 2019 for cluster 4, and then the streams goes back to normal. From this graph I can also see that at the end of the year cluster 4 music is not as popular as in the middle of the year, but type 5 music becomes more and more popular, especially in June and the end of the year. The popularity of cluster 1, cluster 2 and cluster 3 music doesn't vary too much throughout the whole year. 
 
