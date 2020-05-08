@@ -76,7 +76,7 @@ Afterwards, I used the decision tree models to assemble the best predictive mode
 
 
 <p align="center">
-  <img width="500" height="500" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
+  <img width="300" height="400" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
 </p>
 
 >Table 2: RMSE of Different Models
@@ -146,9 +146,7 @@ In this part, I would like to use PCA to balance between the amount of computati
 </p>
 >Table 4: PCA Components
 
-Table 4 reports that the first 20<p align="center">
-  <img width="500" height="500" src="https://github.com/ChiZhang18/Chi-Zhang-exercise/blob/master/Unnamed%20Plots/fp-1.jpg">
-</p> principle components explain more than 90% of the variability. and hence I believe that these 20 principle components would keep the computation load low and eliminate some of the noises, while keeping the majority of the variability. Clustering would further group the songs based on these 20 principle components.
+Table 4 reports that the first 20 principle components explain more than 90% of the variability. and hence I believe that these 20 principle components would keep the computation load low and eliminate some of the noises, while keeping the majority of the variability. Clustering would further group the songs based on these 20 principle components.
 
 ### Part 2: Clustering
 
