@@ -99,6 +99,7 @@ In this part I intended to build a predictive model for the streams of songs in 
 For the first model, I started with the null model by regressing streams on one, followed by running stepwise selection within 25 song feature variables and eventually obtained the final model.
 For the second model, I began with the medium model by regressing streams on all other 25 variables, and used stepwise method to choose variables within all the 25 song features and their interactions.
 By doing so, the two selected models are shown below. Noted that I had 5 and 31 significant coefficients, respectively in the first and second model.
+
     ## [1] "model 1: "
 
     ## Streams ~ danceability + speechiness + explicitTRUE + key8
