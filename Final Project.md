@@ -1,4 +1,4 @@
-Reading Pop: Approaches to Analysis in Popular Music
+Reading Streaming Music: Approaches to Analysis in 2019 Pop Music
 ==========
 
 This report was made by Chi Zhang, UTEID: cz6753.
@@ -6,15 +6,14 @@ This report was made by Chi Zhang, UTEID: cz6753.
 Overview
 ---------------------------------
 
-The pop music market, especially in recent years, is remarkably broad. Songs inspire generations from all walks of life. Every day, oceans of tracks jump to Billboard's Top 200 list. In this project, we collect the data of the 2019 popular music database from the record chart, Billboard 200, and built linear and non-linear prediction models for the overall song streams, and enhanced prediction performance compared to baseline models. More than that, I also segmented the songs into five groups through unsupervised algorithms and estimated the popularity trend for various groups throughout the year. The result of this project can help digital music servers improve playlist song recommendations, and help record companies make album promotion decisions.
+When you're stuck at home, music can provide a sense of order amid the coronavirus chaos. Streaming music is cheap or even free (in the case of Pandora and Spotify) and outpaces any physical format when it comes to ease and convenience. There is no denying that streaming music is now faced with the biggest development opportunity since streaming services accounted for nearly 80% of all music revenue in past 2019, in accordance to a year-end report from the RIAA. Therefore, it is of importance to understand user behavior and preference when interacting with streaming music services. To accomplish this objective, we collected the data of the 2019 popular music database from Pandora, one of the widely-used media service providers, and tried to build the best predictive model possible for streams of songs through both linear and non-linear methods for comprehensiveness. More than that, I also segmented the songs into five groups through unsupervised algorithms and estimated the popularity trend for various groups throughout the year. By doing so, the result of this project could help streaming music serversimprove their playlist song recommendations so that better meet users' need and provide the basis for the optimization of future development roadmap.
 
 Data Sources
 ---------------------------------
 
-The Billboard 200 is a record chart ranking the 200 most popular music albums and EPs in the United States. It is published weekly by Billboard magazine. From <https://www.billboard.com/charts/billboard-200>, we downloaded the weekly data of the top 200 songs in the US. The data in year 2019 gives us access to 1,502 different songs.
-Given Billboard's public API, I had access to the data on the song features, artists and album information. By using web crawler, I could  extract those target data from the web page and store them in .csv format. In the end, the formal dateset ultimately contains the following variables(attached with corresonding descriptions):
+The Pandora Top Spins Chart is a record chart ranking the 100 tracks that have been streamed the most over the course of the past week. It is published weekly by Pandora. From <https://www.nextbigsound.com/charts/top-spins>, we downloaded the weekly data of the top 100 songs in the US. The data in year 2019 gives us access to 1,502 different songs.
+Given Pandora's public API, I had access to the data on the song features, artists and album information. By using web crawler, I could  extract those target data from the web page and store them in *.csv* format. In the end, the formal dateset ultimately contains the following variables(attached with corresonding descriptions):
 
-<b>Table1: Description of Variables used in this Project</b>
 <table style="width:56%;">
 <colgroup>
 <col width="23%" />
@@ -73,8 +72,7 @@ Given Billboard's public API, I had access to the data on the song features, art
 </tr>
 <tr class="even">
 <td>valence</td>
-<td>A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).</td>
-  
+<td>A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).</td>  
 Using the data created by Billboard 200,
 </tr>
 <tr class="odd">
@@ -91,6 +89,7 @@ Using the data created by Billboard 200,
 </tr>
 </tbody>
 </table>
+> Table1: Description of Variables used in this Project  
 
 Predictive Model Building
 --------------------------
@@ -117,9 +116,8 @@ I then used the Lasso model to assemble the best predictive model possible for s
 
 For the third model, viewed from the path plot below I could find that minimum AIC occurs at segment 8, where there are 6 coefficients in this model.
 
-<b> Figure1: Pathplot of Lasso (Model 3) </b>
-
 ![](final_project_files/figure-markdown_github/pathplot3-1.png)
+> Figure1: Pathplot of Lasso (The Third Model)
 
 Thus, I used the model at the segment 8 and chose 6 coefficients. The specific model is shown below.
 
@@ -130,9 +128,8 @@ Thus, I used the model at the segment 8 and chose 6 coefficients. The specific m
 
 For the forth model, viewed from the path plot below I could see that minimum AIC occurs at segment 5, where there are 8 coefficients in the model.
 
-<b> Figure2: Pathplot of Lasso (Model 4) </b>
-
 ![](final_project_files/figure-markdown_github/pathplot4-1.png)
+> Figure2: Pathplot of Lasso (The Forth Model)
 
 Thus, I used the model at the segment 5 and chose 8 coefficients. The specific model is shown below.
 
@@ -144,22 +141,21 @@ Thus, I used the model at the segment 5 and chose 8 coefficients. The specific m
 
 Afterwards, I used the decision tree models to assemble the best predictive model possible for streams. I tried the random forest model and the boosting model on the dataset, which gave me 2 non-linear models: the fifth model and the sixth model.
 
-<b>Table2: RMSE of different models</b>
 
 | Model   | CV               |
-|:--------|:-----------------|
+|----:----|---------:--------|
 | Model 1 | 34802186.114901  |
 | Model 2 | 34571981.9831834 |
 | Model 3 | 34786251.1980486 |
 | Model 4 | 34790460.5500625 |
 | Model 5 | 34406689.4147624 |
 | Model 6 | 35101041.336879  |
+> Table2: RMSE of different models
 
 Lastly, I used k-fold cross validation in order to compare all 6 models above. I found that the CVs of the second model has the minimum CV, and therefore it is the best predictive model possible for streams. The advantage of a linear model is that a linear model with interactions is much easier to interpret than the non-linear models.
 
 The second best model was the fifth model, which came from the random forest method. The random forest model has one advantage over the linear regression: it will only give us positive predictions. As a result, I used both the second model and the fifth model to do the predictions.
 
-<b>Table3: coefficients of the second model</b>
 
 |                               |  coefficients.Estimate|  coefficients.Std..Error|  coefficients.t.value|  coefficients.Pr...t..|
 |-------------------------------|----------------------:|------------------------:|---------------------:|----------------------:|
@@ -194,27 +190,27 @@ The second best model was the fifth model, which came from the random forest met
 | key8:explicitTRUE             |           2.513174e+07|             1.057592e+07|             2.3763173|              0.0176287|
 | valence:key8                  |           3.149553e+07|             1.701434e+07|             1.8511171|              0.0643765|
 | speechiness:key8              |          -3.889988e+07|             2.753208e+07|            -1.4128928|              0.1579235|
+> Table3: coefficients of the second model
 
-From the second model, I could clearly see that danceability, energy, liveness, loudness, mode, speechiness and key 6 have positive effects on streams, which means the more these factors used in the song, the more people the song will be played. Also, I need to pay attention to release duration of the album . The longer the release duration is, the song will be played by less people, which means people prefer to play latest songs on.
+From the second model, I could clearly see that *danceability, energy, liveness, loudness, mode, speechiness* and *key 6* have positive effects on streams, which means the more these factors used in the song, the more people the song will be played. Also, I intend to pay attention to *release duration* of the track . The longer the release duration is, the song will be played by less people, which means users prefer to play latest songs on.
 
-<b> Figure3: partial dependence plot (the fifth Model) </b>
 
 ![](final_project_files/figure-markdown_github/pdp-1.png)
+> Figure3: partial dependence plot (the fifth Model)
 
-Last but not the least, I plot the partial dependence for each variable contained in the fifth model, and the results seems similar to those derived from the second model, which guarantee the robustness of results. In conclusion, both selected linear model(the second model) and the decision tree model(the fifth model) provided me with similar results.  
+Last but not the least, I plot the partial dependence for each variable contained in the fifth model, and the results seem similar to those derived from the second model, which guarantee the robustness of results. In conclusion, both selected linear model(the second model) and the decision tree model(the fifth model) provided me with similar results.  
 
 PCA and Clustering
 ------------------
 
 ### Methodology Statement
 
-In this section I would like to segment the 1,502 songs into groups with similar features in order to recommend to listeners who share the same interests/taste. For the reason of reducing unnecessary noises and computations, I first reduced the initial 25 variables by PCA. Next, I clustered them into groups with similar principle components, and based on the features in each principal component and the actual songs in each cluster, I were able to describe them in secular terminologies such as ??genre??.
+In this section I would like to segment the 1,502 songs into groups with similar features in order to recommend to listeners who share the same interests/taste. For the reason of reducing unnecessary noises and computations, I first reduced the initial 25 variables by PCA. Next, I clustered them into groups with similar principle components, and based on the features in each principal component and the actual songs in each cluster, I were able to describe them in secular terminologies such as *"genre"*.
 
 ### Part1: PCA
 
-I would like to use PCA to balance between the amount of computation load and explanatory variability, while eliminating as much noise as possible from the data. After demeaning and scaling of the data with standard deviation, I calculated the the loading matrix/scores matrix in order to derive the proportion of variance explained (PVE) and decide the number of principal components needed.
+In this part, I would like to use PCA to balance between the amount of computation load and explanatory variability, while eliminating as much noise as possible from the data. After demeaning and scaling of the data with standard deviation, I calculated the the loading matrix/scores matrix in order to derive the proportion of variance explained (PVE) and decide the number of principal components needed.
 
-<b>Table4: PCA components</b>
 
 | ID   | Standard deviation  | Proportion of Variance | Cumulative Proportion |
 |:-----|:--------------------|:-----------------------|:----------------------|
@@ -243,6 +239,7 @@ I would like to use PCA to balance between the amount of computation load and ex
 | PC23 | 0.209254918185628   | 0.00837019672742513    | 0.9957                |
 | PC24 | 0.100442731001129   | 0.00401770924004517    | 0.9997                |
 | PC25 | 0.00698743489964209 | 0.000279497395985684   | 1                     |
+> Table4: PCA components
 
 Table 4 reports that the first 20 principle components explain more than 90% of the variability. and hence I believe that these 20 principle components would keep the computation load low and eliminate some of the noises, while keeping the majority of the variability. Clustering would further group the songs based on these 20 principle components.
 
@@ -250,37 +247,37 @@ Table 4 reports that the first 20 principle components explain more than 90% of 
 
 K-means++ clustering was used to determine the market segments. 3 types of supporting analysis were used to help me determine the number of K (centroids): Elbow plot(SSE), CH index and Gap statistics.
 
-<b>Figure4: SSE Grid vs K</b>
 
 ![](final_project_files/figure-markdown_github/K-grid-1.png)
+> Figure4: SSE Grid vs K
 
-<b>Figure5: CH Grid vs K</b>
 
 ![](final_project_files/figure-markdown_github/CH-grid-1.png)
+> Figure5: CH Grid vs K
 
-<b> Figure6: Gap vs K </b>
 
 ![](final_project_files/figure-markdown_github/Gap-1.png)
+> Figure6: Gap vs K 
 
 As shown above, both Elbow plot and CH index returned K=16 and Gap statistics returned K=4. Clustering 16 segments would not show the distinct differences among them as I now only have 20 principle components to allocate. So I selected K=4 as my anchor and explored the nearby Ks to see which one provides me with the best explanation for each cluster. For **best explanation**, I considered the following 2 categories.
 
--   Clusters that have songs with clear and unique distribution in any of the 20 features.
+-   *Clusters that have songs with clear and unique distribution in any of the 20 features.*
 
--   Clusters that have songs with clear genre by their artist name and actual music.(I have played a considerable quantity of sample size from each cluster on other streaming media server, like Spotify, Pandora, and etc., for confirmation)
+-   *Clusters that have songs with clear genre by their artist name and actual music.(I have played a considerable quantity of sample size from each cluster on video music providers such as YouTube, for confirmation)*
 
 As the result, I eventually picked K = 5.
 
-### Catrgory 1: Song market segments breakdown by distribution of features
+#### Catrgory 1: Song market segments breakdown by distribution of features
 
 After 5 clusters were determined, first I reversed the principle components into the original features to determine cluster characteristics. Then I showed some of the cluster identifiable distributions and the summary of each cluster below.
 
-<b> Figure7: cluster identifiable distributions </b>
 
 ![](final_project_files/figure-markdown_github/PC1-1.png)
 
 ![](final_project_files/figure-markdown_github/PC2-1.png)
 
 ![](final_project_files/figure-markdown_github/PC3-1.png)
+> Figure7: cluster identifiable distributions
 
 -   **Cluster 1**: High in energy, high in loudness, high danceability, low speechiness, considerate amount of G key, low acousticness
 
@@ -310,9 +307,9 @@ Since I have the full list of song names and artist names available in each clus
 
 I also calculated the total streams of different song clusters by time. The following graph demonstrates the trend in the total streams of different categories.
 
-<b> Figure8: trend in the total streams </b>
 
 ![](final_project_files/figure-markdown_github/trend-1.png)
+> Figure8: trend in the total streams
 
 From this graph it is demonstrated that the stream of five types of songs does not change too much in a year. Cluster 4 music has more streams overall, due to the fact that there are more songs in this categories. There is a peak in the end of April in 2019 for cluster 4, and then the streams goes back to normal. From this graph I can also see that at the end of the year cluster 4 music is not as popular as in the middle of the year, but type 5 music becomes more and more popular, especially in June and the end of the year. The popularity of cluster 1, cluster 2 and cluster 3 music doesn't vary too much throughout the whole year. 
 
